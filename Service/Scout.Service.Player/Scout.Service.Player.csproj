@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Scout.Core.Bus\Scout.Core.Bus.csproj" />
+    <ProjectReference Include="..\..\Core\Scout.Core.Contract\Scout.Core.Contract.csproj" />
+    <ProjectReference Include="..\..\Core\Scout.Core\Scout.Core.csproj" />
+    <ProjectReference Include="..\..\Model\Scout.Model.Contract\Scout.Model.Contract.csproj" />
+    <ProjectReference Include="..\..\Model\Scout.Model.DB\Scout.Model.DB.csproj" />
+  </ItemGroup>
+
+</Project>
