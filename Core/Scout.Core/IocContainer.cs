@@ -38,8 +38,6 @@ namespace Scout.Core
                 case DependencyLifetime.Singleton:
                     Services.AddSingleton<TFrom, TTo>();
                     break;
-                default:
-                    break;
             }
         }
 

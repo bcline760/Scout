@@ -1,14 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Scout.Model.DB;
-using Scout.Services.Player.API.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Scout.Service.Player
+namespace Scout.Model.DB.Repository
 {
-    internal class PlayerRepository:IPlayerRepository
+    internal class PlayerRepository : IPlayerRepository
     {
         private ScoutContext scoutContext = null;
 
@@ -43,7 +40,7 @@ namespace Scout.Service.Player
 
         public async Task<List<Model.DB.Player>> FindPlayersByName(string name)
         {
-            List< Model.DB.Player> players = await scoutContext.Players
+            List<Model.DB.Player> players = await scoutContext.Players
                 .Where(p => p.FirstName.StartsWith(name) || p.LastName.StartsWith(name))
                 .Select(p => p)
                 .ToListAsync();
@@ -64,32 +61,5 @@ namespace Scout.Service.Player
 
             return player;
         }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    if (scoutContext != null)
-                        scoutContext.Dispose();
-                }
-
-                scoutContext = null;
-
-                disposedValue = true;
-            }
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
-        #endregion
     }
 }

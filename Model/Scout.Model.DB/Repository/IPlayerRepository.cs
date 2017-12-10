@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Scout.Service.Player
+namespace Scout.Model.DB.Repository
 {
     public interface IPlayerRepository
     {
@@ -13,7 +13,7 @@ namespace Scout.Service.Player
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-        Task<int> CreatePlayer(Model.DB.Player player);
+        Task<int> CreatePlayer(Player player);
 
         /// <summary>
         /// Add to an existing player's overall batting statistics
@@ -34,20 +34,20 @@ namespace Scout.Service.Player
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        Task<Model.DB.Player> GetPlayer(int playerId);
+        Task<Player> GetPlayer(int playerId);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="playerCode"></param>
         /// <returns></returns>
-        Task<Model.DB.Player> GetPlayer(string playerCode);
+        Task<Player> GetPlayer(string playerCode);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        Task<List<Model.DB.Player>> FindPlayersByName(string name);
+        Task<List<Player>> FindPlayersByName(string name);
     }
 }
