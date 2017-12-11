@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Scout.Core.Contract\Scout.Core.Contract.csproj" />
     <ProjectReference Include="..\..\Model\Scout.Model.Contract\Scout.Model.Contract.csproj" />
+    <ProjectReference Include="..\..\Model\Scout.Model.DB\Scout.Model.DB.csproj" />
   </ItemGroup>
 
 </Project>
