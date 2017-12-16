@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 
 namespace Scout.Model.DB.Repository
 {
-    internal class PlayerRepository : IPlayerRepository
+    public class PlayerRepository : IPlayerRepository
     {
-        private ScoutContext scoutContext = null;
+        private IScoutContext scoutContext = null;
 
-        public PlayerRepository(ScoutContext context)
+        public PlayerRepository(IScoutContext context)
         {
             scoutContext = context;
         }
 
         public async Task<int> CreatePlayer(Model.DB.Player player)
         {
-            scoutContext.Players.Add(player);
+            scoutContext.Player.Add(player);
             await scoutContext.SaveChangesAsync();
 
             return player.PlayerId;
@@ -40,7 +40,7 @@ namespace Scout.Model.DB.Repository
 
         public async Task<List<Model.DB.Player>> FindPlayersByName(string name)
         {
-            List<Model.DB.Player> players = await scoutContext.Players
+            List<Model.DB.Player> players = await scoutContext.Player
                 .Where(p => p.FirstName.StartsWith(name) || p.LastName.StartsWith(name))
                 .Select(p => p)
                 .ToListAsync();
@@ -50,14 +50,14 @@ namespace Scout.Model.DB.Repository
 
         public async Task<Model.DB.Player> GetPlayer(int playerId)
         {
-            Model.DB.Player player = await scoutContext.Players.FirstOrDefaultAsync(p => p.PlayerId == playerId);
+            Model.DB.Player player = await scoutContext.Player.FirstOrDefaultAsync(p => p.PlayerId == playerId);
 
             return player;
         }
 
         public async Task<Model.DB.Player> GetPlayer(string playerCode)
         {
-            Model.DB.Player player = await scoutContext.Players.FirstOrDefaultAsync(p => p.PlayerIdentifier == playerCode);
+            Model.DB.Player player = await scoutContext.Player.FirstOrDefaultAsync(p => p.PlayerIdentifier == playerCode);
 
             return player;
         }

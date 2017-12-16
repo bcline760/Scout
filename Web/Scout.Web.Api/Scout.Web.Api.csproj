@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\Core\Scout.Core.Contract\Scout.Core.Contract.csproj" />
     <ProjectReference Include="..\..\Core\Scout.Core\Scout.Core.csproj" />
     <ProjectReference Include="..\..\Model\Scout.Model.Contract\Scout.Model.Contract.csproj" />
+    <ProjectReference Include="..\..\Model\Scout.Model.DB\Scout.Model.DB.csproj" />
     <ProjectReference Include="..\..\Service\Scout.Service\Scout.Service.csproj" />
   </ItemGroup>
 

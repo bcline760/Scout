@@ -9,8 +9,8 @@ namespace Scout.Model.DB.Repository
 {
     internal class TeamRepository : ITeamRepository
     {
-        private ScoutContext _context = null;
-        public TeamRepository(ScoutContext context)
+        private IScoutContext _context = null;
+        public TeamRepository(IScoutContext context)
         {
             _context = context;
         }
@@ -29,7 +29,7 @@ namespace Scout.Model.DB.Repository
 
             if (team != null)
             {
-                _context.Teams.Remove(team);
+                _context.Team.Remove(team);
                 int recordsModified = await _context.SaveChangesAsync(true);
                 return recordsModified;
             }
@@ -38,49 +38,49 @@ namespace Scout.Model.DB.Repository
 
         public async Task<List<Team>> FindTeamsByCode(string teamCode)
         {
-            var teams = await _context.Teams.Where(t => t.TeamIdentifier == teamCode).Select(t => t).ToListAsync();
+            var teams = await _context.Team.Where(t => t.TeamIdentifier == teamCode).Select(t => t).ToListAsync();
 
             return teams;
         }
 
         public async Task<List<Team>> FindTeamsByFranchise(int franchiseId)
         {
-            var teams = await _context.Teams.Where(t => t.FranchiseId == franchiseId).Select(t => t).ToListAsync();
+            var teams = await _context.Team.Where(t => t.FranchiseId == franchiseId).Select(t => t).ToListAsync();
 
             return teams;
         }
 
         public async Task<List<Team>> FindTeamsByLeague(int leagueId)
         {
-            var teams = await _context.Teams.Where(t => t.LeagueId == leagueId).Select(t => t).ToListAsync();
+            var teams = await _context.Team.Where(t => t.LeagueId == leagueId).Select(t => t).ToListAsync();
 
             return teams;
         }
 
         public async Task<List<Team>> FindTeamsByTeamName(string teamName)
         {
-            var teams = await _context.Teams.Where(t => t.TeamName.StartsWith(teamName)).Select(t => t).ToListAsync();
+            var teams = await _context.Team.Where(t => t.TeamName.StartsWith(teamName)).Select(t => t).ToListAsync();
 
             return teams;
         }
 
         public async Task<List<Team>> FindTeamsByYear(short year)
         {
-            var teams = await _context.Teams.Where(t => t.TeamYear == year).Select(t => t).ToListAsync();
+            var teams = await _context.Team.Where(t => t.TeamYear == year).Select(t => t).ToListAsync();
 
             return teams;
         }
 
         public async Task<Team> GetTeam(int teamId)
         {
-            var team = await _context.Teams.FirstOrDefaultAsync(t => t.TeamId == teamId);
+            var team = await _context.Team.FirstOrDefaultAsync(t => t.TeamId == teamId);
 
             return team;
         }
 
         public async Task<int> UpdateTeam(Team team)
         {
-            _context.Teams.Attach(team).State = EntityState.Modified;
+            _context.Team.Attach(team).State = EntityState.Modified;
             int recordsModified = await _context.SaveChangesAsync(true);
             return recordsModified;
         }
