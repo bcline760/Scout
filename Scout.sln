@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Model.DB", "Model\Scout.Model.DB\Scout.Model.DB.csproj", "{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Web", "Web\Scout.Web\Scout.Web.csproj", "{96F0950C-F053-4EDE-BCC0-EA3450DE4DC1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Web.Api", "Web\Scout.Web.Api\Scout.Web.Api.csproj", "{43B61B7E-4AEF-47D0-B830-A5F23924DC7F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Core", "Core\Scout.Core\Scout.Core.csproj", "{4A5F6A91-2D63-47C6-85AF-798161ECE988}"
@@ -17,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Core.Bus", "Core\Scou
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Model.Contract", "Model\Scout.Model.Contract\Scout.Model.Contract.csproj", "{45FCFAD0-3C0C-4537-8135-71E2221BF755}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Service", "Service\Scout.Service\Scout.Service.csproj", "{7F209AA1-B8BC-4DEE-B818-2A7CB16C2081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Service", "Service\Scout.Service\Scout.Service.csproj", "{7F209AA1-B8BC-4DEE-B818-2A7CB16C2081}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96F0950C-F053-4EDE-BCC0-EA3450DE4DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96F0950C-F053-4EDE-BCC0-EA3450DE4DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96F0950C-F053-4EDE-BCC0-EA3450DE4DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96F0950C-F053-4EDE-BCC0-EA3450DE4DC1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43B61B7E-4AEF-47D0-B830-A5F23924DC7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43B61B7E-4AEF-47D0-B830-A5F23924DC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43B61B7E-4AEF-47D0-B830-A5F23924DC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
