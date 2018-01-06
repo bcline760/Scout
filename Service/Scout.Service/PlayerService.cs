@@ -14,35 +14,20 @@ namespace Scout.Service
 {
     public class PlayerService : IPlayerService
     {
-        private IPlayerRepository _repo = null;
+        private IPlayerRepository _player = null;
+        private IPlayerBattingRepository _batting = null;
+        private IPlayerPitchingRepository _pitching = null;
+        private ITeamRepository _teamRepo = null;
 
-        public PlayerService(IPlayerRepository repository)
+        public PlayerService(IPlayerRepository player,
+            IPlayerBattingRepository batting,
+            IPlayerPitchingRepository pitching,
+            ITeamRepository teamRepository)
         {
-            _repo = repository;
-        }
-
-        public async Task<ObjectModifyResult<int>> AddStatistics(PlayerBattingStatistics batting, PlayerPitchingStatistics pitching)
-        {
-            ObjectModifyResult<int> result = new ObjectModifyResult<int>();
-            int totalRecords = 0;
-            if (batting != null)
-            {
-                var entity = MapBattingStatEntity(batting);
-
-                int recordsModified = await _repo.CreatePlayerBattingStatistics(entity);
-                totalRecords += recordsModified;
-            }
-
-            if (pitching != null)
-            {
-                var entity = MapPitchingStatEntity(pitching);
-
-                int recordsModified = await _repo.CreatePlayerPitchingStatistics(entity);
-                totalRecords += recordsModified;
-            }
-
-            result.RecordsModified = totalRecords;
-            return result;
+            _player = player;
+            _batting = batting;
+            _pitching = pitching;
+            _teamRepo = teamRepository;
         }
 
         public async Task<ObjectModifyResult<int>> CreatePlayer(Player player)
@@ -52,35 +37,36 @@ namespace Scout.Service
 
             DB.Player playerEntity = MapPlayerEntity(player);
             int playerId = -1;
+            int recordsModified = 0;
 
             ObjectModifyResult<int> result = new ObjectModifyResult<int>();
-            playerId = await _repo.CreatePlayer(playerEntity);
+            playerId = await _player.CreatePlayer(playerEntity);
 
             if (playerId > 0)
             {
                 result.PrimaryIdentifier = playerId;
+                recordsModified++;
 
                 if (player.BattingStatistics.Count > 0)
                 {
-                    DB.PlayerBattingStatistics pbsEntity = null;
                     foreach (var battingStat in player.BattingStatistics)
                     {
-                        pbsEntity = MapBattingStatEntity(battingStat);
-                        playerEntity.PlayerBattingStatistics.Add(pbsEntity);
+                        var battingResult = await AddStatistics(battingStat, null);
+                        recordsModified += battingResult.RecordsModified;
                     }
                 }
 
                 if (player.PitchingStatistics.Count > 0)
                 {
-                    DB.PlayerPitchingStatistics ppsEntity = null;
                     foreach (var pitching in player.PitchingStatistics)
                     {
-                        ppsEntity = MapPitchingStatEntity(pitching);
-                        
-                        playerEntity.PlayerPitchingStatistics.Add(ppsEntity);
+                        var pitchingResult = await AddStatistics(null, pitching);
+                        recordsModified += pitchingResult.RecordsModified;
                     }
                 }
             }
+
+            result.RecordsModified = recordsModified;
 
             return result;
         }
@@ -93,31 +79,34 @@ namespace Scout.Service
             List<Player> players = new List<Player>();
             if (!string.IsNullOrEmpty(request.PlayerName))
             {
-                var playerEntities = await _repo.FindPlayersByName(request.PlayerName);
+                var playerEntities = await _player.FindPlayersByName(request.PlayerName);
                 players.AddRange(playerEntities.Select(MapPlayerData).ToList());
             }
             else if (!string.IsNullOrEmpty(request.PlayerCode))
             {
-                var ply = await _repo.GetPlayer(request.PlayerCode);
-                players.Add(MapPlayerData(ply));
+                var ply = await _player.GetPlayer(request.PlayerCode);
+                if (ply != null)
+                    players.Add(MapPlayerData(ply));
             }
 
             foreach (var player in players)
             {
-                //Ignore if player doesn't have batting stats (such as AL pitchers)
-                if (player.BattingStatistics.Count < 1)
-                    continue;
+                var battingStats = await _batting.GetStatistics(player.PlayerId);
+                var pitchingStats = await _pitching.GetStatistics(player.PlayerId);
 
                 //Calculate advanced batting metrics
-                player.AdvancedBattingStatistics = player.BattingStatistics.Select(a => new PlayerAdvancedBattingStatistics
+                player.AdvancedBattingStatistics = battingStats.Select(a => new PlayerAdvancedBattingStatistics
                 {
+                    PlayerIdentifier = a.PlayerIdentifier,
+                    TeamIdentifier = a.TeamIdentifier,
+                    TeamName = a.TeamName,
+                    TeamYear = a.TeamYear,
                     BattingAverage = a.BattingAverage,
                     BattingAvgOfBallsInPlay = BaseballStatisticCalculation.GetBattingAvgOfBallsInPlay(a.AtBats, a.Hits, a.Homeruns, a.Strikeouts, a.SacrificeFlies),
                     ExtraBaseHitPercentage = BaseballStatisticCalculation.GetRatio(a.Doubles + a.Triples + a.Homeruns, a.PlateAppearances),
                     HomeRunPercentage = BaseballStatisticCalculation.GetRatio(a.Homeruns, a.PlateAppearances),
                     InPlayPercentage = BaseballStatisticCalculation.GetRatio(a.AtBats - a.Strikeouts - a.Homeruns - a.SacrificeFlies, a.PlateAppearances),
                     OnBasePercentage = BaseballStatisticCalculation.GetRatio(a.Hits + a.Walks + a.HitByPitch, a.AtBats + a.Walks + a.HitByPitch + a.SacrificeFlies),
-                    PlayerId = a.PlayerId,
                     SluggingPercentage = BaseballStatisticCalculation.GetRatio(a.Hits + (2 * a.Doubles) + (3 * a.Triples) + (4 * a.Homeruns), a.AtBats),
                     StrikeoutPercentage = BaseballStatisticCalculation.GetRatio(a.Strikeouts, a.PlateAppearances),
                     WalkPercentage = BaseballStatisticCalculation.GetRatio(a.Walks, a.PlateAppearances)
@@ -129,7 +118,47 @@ namespace Scout.Service
 
         public async Task<ObjectModifyResult<int>> UpdatePlayer(Player player)
         {
-            throw new NotImplementedException();
+            DB.Player dbPlayer = MapPlayerEntity(player);
+            int recordsModified = await _player.UpdatePlayer(dbPlayer);
+            ObjectModifyResult<int> result = new ObjectModifyResult<int>
+            {
+                PrimaryIdentifier = player.PlayerId,
+                RecordsModified = recordsModified
+            };
+
+            return result;
+        }
+
+        private async Task<ObjectModifyResult<int>> AddStatistics(PlayerBattingStatistics batting, PlayerPitchingStatistics pitching)
+        {
+            if (batting == null && pitching == null)
+                throw new ArgumentException("Both pitching and batting statistics cannot be null");
+
+            ObjectModifyResult<int> result = new ObjectModifyResult<int>();
+            int totalRecords = 0;
+            
+            if (batting != null)
+            {
+                var team = await _teamRepo.GetTeamByYearCode(batting.TeamYear, batting.TeamIdentifier);
+                var entity = MapBattingStatEntity(batting);
+
+                entity.TeamId = team.TeamId;
+                int recordsModified = await _batting.CreatePlayerBattingStatistics(entity);
+                totalRecords += recordsModified;
+            }
+
+            if (pitching != null)
+            {
+                var team = await _teamRepo.GetTeamByYearCode(pitching.TeamYear, pitching.TeamIdentifier);
+                var entity = MapPitchingStatEntity(pitching);
+                entity.TeamId = team.TeamId;
+
+                int recordsModified = await _pitching.CreatePlayerPitchingStatistics(entity);
+                totalRecords += recordsModified;
+            }
+
+            result.RecordsModified = totalRecords;
+            return result;
         }
 
         private Player MapPlayerData(DB.Player p)
@@ -145,29 +174,21 @@ namespace Scout.Service
                 DeathCountry = p.DeathCountry,
                 DeathDate = p.DeathDate,
                 DeathStateProvince = p.DeathStateProvince,
-                DraftTeamId = p.DraftTeamId,
-                DraftYear = p.DraftYear,
                 FirstName = p.FirstName,
                 Height = p.Height,
                 LastName = p.LastName,
                 MajorLeagueDebut = p.MajorLeagueDebut,
                 PlayerId = p.PlayerId,
                 PlayerIdentifier = p.PlayerIdentifier,
-                PrimaryPosition = p.PrimaryPosition,
                 RetrosheetId = p.RetrosheetId,
                 Throws = p.Throws,
                 Weight = p.Weight
             };
 
-            if (p.PlayerBattingStatistics != null && p.PlayerBattingStatistics.Count > 0)
-                pData.BattingStatistics.AddRange(p.PlayerBattingStatistics.Select(MapBattingStatistics));
-            if (p.PlayerPitchingStatistics != null && p.PlayerPitchingStatistics.Count > 0)
-                pData.PitchingStatistics.AddRange(p.PlayerPitchingStatistics.Select(MapPitchingStatistics));
-
             return pData;
         }
 
-        private PlayerBattingStatistics MapBattingStatistics(DB.PlayerBattingStatistics battingStats)
+        private PlayerBattingStatistics MapBattingStatistics(DB.PlayerBattingStatisticsView battingStats)
         {
             return new PlayerBattingStatistics
             {
@@ -184,21 +205,22 @@ namespace Scout.Service
                 OnBasePlusSlugging = battingStats.OnBasePlusSlugging,
                 OnBasePlusSluggingAdj = battingStats.OnBasePlusSluggingAdj,
                 PlateAppearances = battingStats.PlateAppearances,
-                PlayerId = battingStats.PlayerId,
+                PlayerIdentifier = battingStats.PlayerIdentifier,
                 RunsBattedIn = battingStats.RunsBattedIn,
                 SacrificeFlies = battingStats.SacrificeFlies,
                 SacrificeHits = battingStats.SacrificeHits,
                 SluggingPercentage = battingStats.SluggingPercentage,
                 StolenBases = battingStats.StolenBases,
                 Strikeouts = battingStats.Strikeouts,
-                TeamId = battingStats.TeamId,
+                TeamIdentifier = battingStats.TeamIdentifier,
+                TeamName = battingStats.TeamName,
+                TeamYear = battingStats.TeamYear,
                 Triples = battingStats.Triples,
                 Walks = battingStats.Walks,
-                PlayerBattingStatisticsId = battingStats.PlayerBattingStatisticsId
             };
         }
 
-        private PlayerPitchingStatistics MapPitchingStatistics(DB.PlayerPitchingStatistics pitchingStats)
+        private PlayerPitchingStatistics MapPitchingStatistics(DB.PlayerPitchingStatisticsView pitchingStats)
         {
             return new PlayerPitchingStatistics
             {
@@ -217,11 +239,13 @@ namespace Scout.Service
                 InningsPitched = pitchingStats.InningsPitched,
                 IntentionalWalks = pitchingStats.IntentionalWalks,
                 PitchingStint = pitchingStats.PitchingStint,
-                PlayerId = pitchingStats.PlayerId,
+                PlayerIdentifier = pitchingStats.PlayerIdentifier,
                 Runs = pitchingStats.Runs,
                 Shutouts = pitchingStats.Shutouts,
                 Strikeouts = pitchingStats.Strikeouts,
-                TeamId = pitchingStats.TeamId,
+                TeamIdentifier = pitchingStats.TeamIdentifier,
+                TeamName = pitchingStats.TeamName,
+                TeamYear = pitchingStats.TeamYear,
                 TimesInducedGidp = pitchingStats.TimesInducedGidp,
                 Walks = pitchingStats.Walks,
                 WildPitches = pitchingStats.WildPitches
@@ -247,11 +271,9 @@ namespace Scout.Service
                 InningsPitched = pitching.InningsPitched,
                 IntentionalWalks = pitching.IntentionalWalks,
                 PitchingStint = pitching.PitchingStint,
-                PlayerId = pitching.PlayerId,
                 Runs = pitching.Runs,
                 Shutouts = pitching.Shutouts,
                 Strikeouts = pitching.Strikeouts,
-                TeamId = pitching.TeamId,
                 TimesInducedGidp = pitching.TimesInducedGidp,
                 Walks = pitching.Walks,
                 WildPitches = pitching.WildPitches
@@ -275,14 +297,12 @@ namespace Scout.Service
                 OnBasePlusSlugging = battingStat.OnBasePlusSlugging,
                 OnBasePlusSluggingAdj = battingStat.OnBasePlusSluggingAdj,
                 PlateAppearances = battingStat.PlateAppearances,
-                PlayerId = battingStat.PlayerId,
                 RunsBattedIn = battingStat.RunsBattedIn,
                 SacrificeFlies = battingStat.SacrificeFlies,
                 SacrificeHits = battingStat.SacrificeHits,
                 SluggingPercentage = battingStat.SluggingPercentage,
                 StolenBases = battingStat.StolenBases,
                 Strikeouts = battingStat.Strikeouts,
-                TeamId = battingStat.TeamId,
                 Triples = battingStat.Triples,
                 Walks = battingStat.Walks
             };
@@ -301,15 +321,12 @@ namespace Scout.Service
                 DeathCountry = player.DeathCountry,
                 DeathDate = player.DeathDate,
                 DeathStateProvince = player.DeathStateProvince,
-                DraftTeamId = player.DraftTeamId,
-                DraftYear = player.DraftYear,
                 FirstName = player.FirstName,
                 Height = player.Height,
                 LastName = player.LastName,
                 MajorLeagueDebut = player.MajorLeagueDebut,
                 PlayerId = player.PlayerId,
                 PlayerIdentifier = player.PlayerIdentifier,
-                PrimaryPosition = player.PrimaryPosition,
                 RetrosheetId = player.RetrosheetId,
                 Throws = player.Throws,
                 Weight = player.Weight

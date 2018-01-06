@@ -1,46 +1,45 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.EntityFrameworkCore;
+using Scout.Model.DB.Context;
+
 namespace Scout.Model.DB.Repository
 {
-    public class PlayerRepository : IPlayerRepository
+    public class PlayerRepository : DbRepository, IPlayerRepository
     {
-        private IScoutContext scoutContext = null;
-
-        public PlayerRepository(IScoutContext context)
+        public PlayerRepository(IScoutContext context) : base(context)
         {
-            scoutContext = context;
         }
 
         public async Task<int> CreatePlayer(Model.DB.Player player)
         {
-            scoutContext.Player.Add(player);
-            await scoutContext.SaveChangesAsync();
+            Context.Player.Add(player);
+            await Context.SaveChangesAsync();
 
             return player.PlayerId;
         }
 
-        public async Task<int> CreatePlayerBattingStatistics(PlayerBattingStatistics battingStats)
-        {
-            scoutContext.PlayerBattingStatisticsSet.Add(battingStats);
-            await scoutContext.SaveChangesAsync();
-
-            return battingStats.PlayerBattingStatisticsId;
-        }
-
         public async Task<int> CreatePlayerPitchingStatistics(PlayerPitchingStatistics pitchingStats)
         {
-            scoutContext.PlayerPitchingStatisticsSet.Add(pitchingStats);
-            await scoutContext.SaveChangesAsync();
+            Context.PlayerPitchingStatistics.Add(pitchingStats);
+            await Context.SaveChangesAsync();
 
             return pitchingStats.PlayerPitchingStatisticsId;
         }
 
+        public async Task<int> CreatePlayerFieldingStatistics(PlayerFieldingStatistics fieldingStatistics)
+        {
+            Context.PlayerFieldingStatistics.Add(fieldingStatistics);
+            await Context.SaveChangesAsync();
+
+            return fieldingStatistics.PlayerFieldingStatisticsId;
+        }
+
         public async Task<List<Model.DB.Player>> FindPlayersByName(string name)
         {
-            List<Model.DB.Player> players = await scoutContext.Player
+            List<Model.DB.Player> players = await Context.Player
                 .Where(p => p.FirstName.StartsWith(name) || p.LastName.StartsWith(name))
                 .Select(p => p)
                 .ToListAsync();
@@ -50,16 +49,31 @@ namespace Scout.Model.DB.Repository
 
         public async Task<Model.DB.Player> GetPlayer(int playerId)
         {
-            Model.DB.Player player = await scoutContext.Player.FirstOrDefaultAsync(p => p.PlayerId == playerId);
+            Model.DB.Player player = await Context.Player.FirstOrDefaultAsync(p => p.PlayerId == playerId);
 
             return player;
         }
 
         public async Task<Model.DB.Player> GetPlayer(string playerCode)
         {
-            Model.DB.Player player = await scoutContext.Player.FirstOrDefaultAsync(p => p.PlayerIdentifier == playerCode);
+            Model.DB.Player player = await Context.Player
+                .FirstOrDefaultAsync(p => p.PlayerIdentifier == playerCode);
 
             return player;
+        }
+
+        public async Task<int> UpdatePlayer(Player player)
+        {
+            var oldPlayer = await Context.Player
+                .FirstOrDefaultAsync(b => b.PlayerId == player.PlayerId);
+
+            if (oldPlayer != null)
+            {
+                Context.DbContext.Attach<Player>(player);
+                return await Context.SaveChangesAsync();
+            }
+            else
+                return -1; //MAGIC NUMBER
         }
     }
 }

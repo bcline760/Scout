@@ -1,10 +1,8 @@
 ﻿using Scout.Core;
+using Scout.Model.DB.Context;
 using Scout.Model.DB.Repository;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Scout.Model.DB
+namespace Scout.Model.Context
 {
     public class IocRegistrations : IRegister
     {
@@ -12,6 +10,8 @@ namespace Scout.Model.DB
         {
             container.RegisterType<IScoutContext, ScoutContext>(DependencyLifetime.Singleton);
             container.RegisterType<IPlayerRepository, PlayerRepository>(DependencyLifetime.Singleton);
+            container.RegisterType<IPlayerBattingRepository, PlayerBattingRepository>(DependencyLifetime.Transient);
+            container.RegisterType<IPlayerPitchingRepository, PlayerPitchingRepository>(DependencyLifetime.Transient);
             container.RegisterType<ITeamRepository, TeamRepository>(DependencyLifetime.Singleton);
         }
     }

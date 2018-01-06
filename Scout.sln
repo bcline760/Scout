@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Model.DB", "Model\Scout.Model.DB\Scout.Model.DB.csproj", "{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Web.Api", "Web\Scout.Web.Api\Scout.Web.Api.csproj", "{43B61B7E-4AEF-47D0-B830-A5F23924DC7F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Core", "Core\Scout.Core\Scout.Core.csproj", "{4A5F6A91-2D63-47C6-85AF-798161ECE988}"
 EndProject
@@ -17,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Model.Contract", "Mod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Service", "Service\Scout.Service\Scout.Service.csproj", "{7F209AA1-B8BC-4DEE-B818-2A7CB16C2081}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Web.UI", "Web\Scout.Web.UI\Scout.Web.UI.csproj", "{94D878BC-88EC-49F7-B43F-FE9AE4ED36A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +27,6 @@ Global
 		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43B61B7E-4AEF-47D0-B830-A5F23924DC7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43B61B7E-4AEF-47D0-B830-A5F23924DC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43B61B7E-4AEF-47D0-B830-A5F23924DC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43B61B7E-4AEF-47D0-B830-A5F23924DC7F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4A5F6A91-2D63-47C6-85AF-798161ECE988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A5F6A91-2D63-47C6-85AF-798161ECE988}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A5F6A91-2D63-47C6-85AF-798161ECE988}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +47,10 @@ Global
 		{7F209AA1-B8BC-4DEE-B818-2A7CB16C2081}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F209AA1-B8BC-4DEE-B818-2A7CB16C2081}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F209AA1-B8BC-4DEE-B818-2A7CB16C2081}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94D878BC-88EC-49F7-B43F-FE9AE4ED36A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94D878BC-88EC-49F7-B43F-FE9AE4ED36A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94D878BC-88EC-49F7-B43F-FE9AE4ED36A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94D878BC-88EC-49F7-B43F-FE9AE4ED36A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

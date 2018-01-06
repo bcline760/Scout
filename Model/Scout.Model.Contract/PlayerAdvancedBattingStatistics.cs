@@ -5,12 +5,8 @@ using System.Text;
 
 namespace Scout.Model.Contract
 {
-    public class PlayerAdvancedBattingStatistics
+    public class PlayerAdvancedBattingStatistics : PlayerStatistics
     {
-        [DataMember]
-        public int PlayerId { get; set; }
-        [DataMember]
-        public int TeamId { get; set; }
         [DataMember]
         public decimal BattingAverage { get; set; }
         [DataMember]

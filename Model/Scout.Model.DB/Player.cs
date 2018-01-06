@@ -38,10 +38,6 @@ namespace Scout.Model.DB
         public string DeathStateProvince { get; set; }
         [Column(TypeName = "varchar(64)")]
         public string DeathCountry { get; set; }
-        [Column(TypeName = "varchar(2)")]
-        public string PrimaryPosition { get; set; }
-        public Nullable<int> DraftTeamId { get; set; }
-        public Nullable<short> DraftYear { get; set; }
         public Nullable<System.DateTime> MajorLeagueDebut { get; set; }
         [Column(TypeName = "varchar(1)")]
         public string Bats { get; set; }
@@ -52,5 +48,6 @@ namespace Scout.Model.DB
 
         public virtual ICollection<PlayerPitchingStatistics> PlayerPitchingStatistics { get; set; }
         public virtual ICollection<PlayerBattingStatistics> PlayerBattingStatistics { get; set; }
+        public virtual ICollection<PlayerFieldingStatistics> PlayerFieldingStatistics { get; set; }
     }
 }

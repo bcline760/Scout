@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Scout.Core;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Scout.Model.DB
+namespace Scout.Model.DB.Context
 {
     public class ScoutContext : DbContext, IScoutContext
     {
@@ -58,9 +58,11 @@ namespace Scout.Model.DB
 
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<Team> Team { get; set; }
-        public virtual DbSet<PlayerPitchingStatistics> PlayerPitchingStatisticsSet { get; set; }
-        public virtual DbSet<PlayerBattingStatistics> PlayerBattingStatisticsSet { get; set; }
+        public virtual DbSet<PlayerPitchingStatistics> PlayerPitchingStatistics { get; set; }
+        public virtual DbSet<PlayerBattingStatistics> PlayerBattingStatistics { get; set; }
+        public virtual DbSet<PlayerFieldingStatistics> PlayerFieldingStatistics { get; set; }
         public virtual DbSet<League> League { get; set; }
         public virtual DbSet<Franchise> Franchise { get; set; }
+        public DbContext DbContext => this;
     }
 }

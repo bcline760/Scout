@@ -36,6 +36,14 @@ namespace Scout.Model.DB.Repository
         Task<Team> GetTeam(int teamId);
 
         /// <summary>
+        /// Get a single team year by the year and the team identifier
+        /// </summary>
+        /// <param name="year">The team season year</param>
+        /// <param name="code">The team's identifier</param>
+        /// <returns>A team matching the identifier and year</returns>
+        Task<Team> GetTeamByYearCode(short year, string code);
+
+        /// <summary>
         /// Find teams by their name
         /// </summary>
         /// <param name="teamName"></param>

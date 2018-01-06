@@ -5,14 +5,8 @@ using System.Text;
 
 namespace Scout.Model.Contract
 {
-    public class PlayerBattingStatistics
+    public class PlayerBattingStatistics:PlayerStatistics
     {
-        [DataMember]
-        public int PlayerBattingStatisticsId { get; set; }
-        [DataMember]
-        public int PlayerId { get; set; }
-        [DataMember]
-        public int TeamId { get; set; }
         [DataMember]
         public short PlateAppearances { get; set; }
         [DataMember]

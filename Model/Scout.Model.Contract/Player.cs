@@ -40,12 +40,6 @@ namespace Scout.Model.Contract
         [DataMember]
         public string DeathCountry { get; set; }
         [DataMember]
-        public string PrimaryPosition { get; set; }
-        [DataMember]
-        public int? DraftTeamId { get; set; }
-        [DataMember]
-        public short? DraftYear { get; set; }
-        [DataMember]
         public DateTime? MajorLeagueDebut { get; set; }
         [DataMember]
         public string Bats { get; set; }

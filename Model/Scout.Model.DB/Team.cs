@@ -60,5 +60,6 @@ namespace Scout.Model.DB
 
         public virtual ICollection<PlayerPitchingStatistics> PlayerPitchingStatistics { get; set; }
         public virtual ICollection<PlayerBattingStatistics> PlayerBattingStatistics { get; set; }
+        public virtual ICollection<PlayerFieldingStatistics> PlayerFieldingStatistics { get; set; }
     }
 }

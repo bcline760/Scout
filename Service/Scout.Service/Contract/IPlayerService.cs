@@ -17,14 +17,6 @@ namespace Scout.Service.Contract
         Task<ObjectModifyResult<int>> CreatePlayer(Player player);
 
         /// <summary>
-        /// Add statistics to an existing player
-        /// </summary>
-        /// <param name="batting">Add to the player's batting statistics</param>
-        /// <param name="pitching">Add to the player's pitching statistics</param>
-        /// <returns>Number of added returned</returns>
-        Task<ObjectModifyResult<int>> AddStatistics(PlayerBattingStatistics batting, PlayerPitchingStatistics pitching);
-
-        /// <summary>
         /// Find players matching the request criteria
         /// </summary>
         /// <param name="request">Request criteria for player searching</param>

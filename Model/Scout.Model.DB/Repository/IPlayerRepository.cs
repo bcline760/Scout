@@ -16,18 +16,11 @@ namespace Scout.Model.DB.Repository
         Task<int> CreatePlayer(Player player);
 
         /// <summary>
-        /// Add to an existing player's overall batting statistics
+        /// Add to a player's fielding statistics
         /// </summary>
-        /// <param name="battingStats">The batting stats to insert for player</param>
-        /// <returns></returns>
-        Task<int> CreatePlayerBattingStatistics(PlayerBattingStatistics battingStats);
-
-        /// <summary>
-        /// Add to an overall player's pitching statistics
-        /// </summary>
-        /// <param name="pitchingStats">The pitching stats to insert for player</param>
-        /// <returns></returns>
-        Task<int> CreatePlayerPitchingStatistics(PlayerPitchingStatistics pitchingStats);
+        /// <param name="fieldingStatistics">The new set of fielding statistics to add</param>
+        /// <returns>Number of records returned</returns>
+        Task<int> CreatePlayerFieldingStatistics(PlayerFieldingStatistics fieldingStatistics);
 
         /// <summary>
         /// Get a player by database identifier
@@ -49,5 +42,12 @@ namespace Scout.Model.DB.Repository
         /// <param name="name"></param>
         /// <returns></returns>
         Task<List<Player>> FindPlayersByName(string name);
+
+        /// <summary>
+        /// Updates an existing player
+        /// </summary>
+        /// <param name="player">The player record to update</param>
+        /// <returns>Number of records updated</returns>
+        Task<int> UpdatePlayer(Player player);
     }
 }

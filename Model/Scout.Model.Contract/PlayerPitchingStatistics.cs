@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text;
+﻿using System.Runtime.Serialization;
 
 namespace Scout.Model.Contract
 {
-    public class PlayerPitchingStatistics
+    [DataContract]
+    public class PlayerPitchingStatistics : PlayerStatistics
     {
-        [DataMember]
-        public int PlayerId { get; set; }
-        [DataMember]
-        public int TeamId { get; set; }
         [DataMember]
         public byte PitchingStint { get; set; }
         [DataMember]
         public short GamesWon { get; set; }
-        [DataMember]public short GamesLost { get; set; }
+        [DataMember]
+        public short GamesLost { get; set; }
+        [DataMember]
         public short GamesPlayed { get; set; }
         [DataMember]
         public short GamesStarted { get; set; }
