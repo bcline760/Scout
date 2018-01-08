@@ -17,6 +17,12 @@ namespace Scout.Service.Contract
         Task<ObjectModifyResult<int>> CreatePlayer(Player player);
 
         /// <summary>
+        /// Get a list of all the players in the database
+        /// </summary>
+        /// <returns>List of all players in database</returns>
+        Task<List<PlayerListItem>> RetrievePlayers();
+
+        /// <summary>
         /// Find players matching the request criteria
         /// </summary>
         /// <param name="request">Request criteria for player searching</param>

@@ -24,10 +24,12 @@ namespace Scout.Web.UI.Controllers
         [HttpGet("")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<List<Player>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<List<PlayerListItem>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll()
         {
+            var serviceResult = await ExecuteServiceMethod<List<PlayerListItem>>(_service.RetrievePlayers, "RetrievePlayers", Core.ApiStatusCode.OK);
 
+            return serviceResult;
         }
 
         // GET api/values/5

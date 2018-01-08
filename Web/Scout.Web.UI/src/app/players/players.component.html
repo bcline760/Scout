@@ -1,3 +1,59 @@
-<p>
-  players works!
-</p>
+<div class="container">
+    <h2>Index of Letter</h2>
+    <div class="row">
+        <div class="col-xs-1"><a [routerLink]="['/players/a']">A</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/b']">B</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/c']">C</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/d']">D</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/e']">E</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/f']">F</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/g']">G</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/h']">H</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/i']">I</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/j']">J</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/k']">K</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/l']">L</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/m']">M</a></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-1"><a [routerLink]="['/players/n']">N</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/o']">O</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/p']">P</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/q']">Q</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/r']">R</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/s']">S</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/t']">T</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/u']">U</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/v']">V</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/w']">W</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/x']">X</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/y']">Y</a></div>
+        <div class="col-xs-1"><a [routerLink]="['/players/z']">Z</a></div>
+    </div>
+    <div [hidden]="hideSelectList">
+        
+        <h2>List of baseball players in alphabetical order</h2>
+        <ul class="player-select-list list-group" *ngFor="let player of playerSelectList">
+            <li class="list-group-item">
+                <p>
+                    <a [routerLink]="['/players',player.letter]" class="player-select-list-letter">{{player.letter}}</a>
+                </p>
+                <p>
+                    <span *ngFor="let playerItem of player.players" class="player-select-items">
+                        <a [routerLink]="['/player',playerItem.playerCode]">
+                            {{playerItem.firstName}}&nbsp;{{playerItem.lastName}}
+                        </a>&nbsp;
+                    </span>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div [hidden]="hideNamedList">
+        <h2>These are all the players whose last name starts with {{startingLetter}}</h2>
+        <div class="list-group" *ngFor="let player of playerNamedList">
+            <a [routerLink]="['/player',player.playerCode]" class="list-group-item">
+                {{player.firstName}}&nbsp;{{player.lastName}}
+            </a>
+        </div>
+    </div>
+</div>

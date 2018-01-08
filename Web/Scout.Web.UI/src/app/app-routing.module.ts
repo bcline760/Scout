@@ -13,9 +13,11 @@ const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'error', component: ErrorComponent },
     { path: 'players', component: PlayersComponent },
+    { path: 'players/:letter', component: PlayersComponent  },
     { path: 'player/:id', component: PlayerComponent },
     { path: 'teams', component: TeamsComponent },
-    { path: 'team/:id', component: TeamComponent }
+    { path: 'team/:id', component: TeamComponent },
+    { path: 'team/:id/:yr', component: TeamComponent }
 ];
 
 @NgModule({

@@ -1,7 +1,11 @@
-export class PlayerBattingStatistics {
-    public playerBattingStatisticsId: number;
-    public playerId: number;
-    public teamId: number;
+class PlayerStatistics {
+    public playerIdentifier: string;
+    public teamIdentifier: string;
+    public teamName: string;
+    public teamYear: number;
+}
+
+export class PlayerBattingStatistics extends PlayerStatistics {
     public plateAppearances: number;
     public atBats: number;
     public hits: number;
@@ -25,9 +29,7 @@ export class PlayerBattingStatistics {
     public onBasePlusSluggingAdj: number;
 }
 
-export class PlayerAdvancedBattingStatistics {
-    public playerId: number;
-    public teamId: number;
+export class PlayerAdvancedBattingStatistics extends PlayerStatistics {
     public battingAverage: number;
     public totalAverage: number;
     public onBasePercentage: number;
@@ -42,9 +44,7 @@ export class PlayerAdvancedBattingStatistics {
     public inPlayPercentage: number;
 }
 
-export class PlayerPitchingStatistics {
-    public playerId: number;
-    public teamId: number;
+export class PlayerPitchingStatistics extends PlayerStatistics {
     public pitchingStint: number;
     public gamesWon: number;
     public gamesLost: number;
@@ -74,8 +74,9 @@ export class Player {
     public firstName: string;
     public lastName: string;
     public birthDate?: Date;
-    public birthStateProvince: string;
-    public birthCountry: string;
+    public birthCity?: string;
+    public birthStateProvince?: string;
+    public birthCountry?: string;
     public deathDate?: Date;
     public deathCity: string;
     public deathStateProvince: string;
@@ -92,4 +93,11 @@ export class Player {
     public battingStatistics: PlayerBattingStatistics[];
     public pitchingStatistics: PlayerPitchingStatistics[];
     public advancedBattingStatistics: PlayerAdvancedBattingStatistics[];
+}
+
+export class PlayerListItem {
+    public playerCode: string;
+    public firstName: string;
+    public lastName: string;
+    public playerRetrosheetId: string;
 }

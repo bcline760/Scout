@@ -16,11 +16,10 @@ namespace Scout.Model.DB.Repository
         Task<int> CreatePlayer(Player player);
 
         /// <summary>
-        /// Add to a player's fielding statistics
+        /// Retrieves all the players in the database
         /// </summary>
-        /// <param name="fieldingStatistics">The new set of fielding statistics to add</param>
-        /// <returns>Number of records returned</returns>
-        Task<int> CreatePlayerFieldingStatistics(PlayerFieldingStatistics fieldingStatistics);
+        /// <returns>List of the entire player database</returns>
+        Task<List<Player>> GetAllPlayers();
 
         /// <summary>
         /// Get a player by database identifier

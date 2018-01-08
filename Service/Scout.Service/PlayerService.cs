@@ -71,6 +71,21 @@ namespace Scout.Service
             return result;
         }
 
+        public async Task<List<PlayerListItem>> RetrievePlayers()
+        {
+            var players = await _player.GetAllPlayers();
+
+            var playerList = players.Select(s => new PlayerListItem
+            {
+                PlayerCode = s.PlayerIdentifier,
+                FirstName = s.FirstName,
+                LastName = s.LastName,
+                PlayerRetrosheetId = s.RetrosheetId
+            }).ToList();
+
+            return playerList;
+        }
+
         public async Task<List<Player>> FindPlayers(PlayerSearchRequest request)
         {
             if (request == null)
@@ -93,6 +108,9 @@ namespace Scout.Service
             {
                 var battingStats = await _batting.GetStatistics(player.PlayerId);
                 var pitchingStats = await _pitching.GetStatistics(player.PlayerId);
+
+                player.BattingStatistics = battingStats.Select(MapBattingStatistics).ToList();
+                player.PitchingStatistics = pitchingStats.Select(MapPitchingStatistics).ToList();
 
                 //Calculate advanced batting metrics
                 player.AdvancedBattingStatistics = battingStats.Select(a => new PlayerAdvancedBattingStatistics

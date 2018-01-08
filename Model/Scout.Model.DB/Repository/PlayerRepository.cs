@@ -21,20 +21,11 @@ namespace Scout.Model.DB.Repository
             return player.PlayerId;
         }
 
-        public async Task<int> CreatePlayerPitchingStatistics(PlayerPitchingStatistics pitchingStats)
+        public async Task<List<Player>> GetAllPlayers()
         {
-            Context.PlayerPitchingStatistics.Add(pitchingStats);
-            await Context.SaveChangesAsync();
+            List<Player> allPlayers = await Context.Player.ToListAsync();
 
-            return pitchingStats.PlayerPitchingStatisticsId;
-        }
-
-        public async Task<int> CreatePlayerFieldingStatistics(PlayerFieldingStatistics fieldingStatistics)
-        {
-            Context.PlayerFieldingStatistics.Add(fieldingStatistics);
-            await Context.SaveChangesAsync();
-
-            return fieldingStatistics.PlayerFieldingStatisticsId;
+            return allPlayers;
         }
 
         public async Task<List<Model.DB.Player>> FindPlayersByName(string name)
