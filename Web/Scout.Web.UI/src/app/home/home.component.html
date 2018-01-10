@@ -1,3 +1,26 @@
-<p>
-  home works!
-</p>
+<form class="form-horizontal">
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Player Search</legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Player</label>
+            <div class="col-md-6">
+                <input id="textinput" name="textinput" type="text" placeholder="Tony Gwynn, Trevor Hoffman, Edgar Martinez, Randy Johnson" class="form-control input-md" required="">
+                <span class="help-block">Search by player name or partial player name</span>
+            </div>
+        </div>
+
+        <!-- Button (Double) -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="btnFind">Submit</label>
+            <div class="col-md-8">
+                <button id="btnFind" name="btnFind" class="btn btn-primary">Search</button>
+                <button id="btnClear" name="btnClear" class="btn btn-inverse">Clear</button>
+            </div>
+        </div>
+
+    </fieldset>
+</form>

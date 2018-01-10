@@ -73,14 +73,14 @@ export class Player {
     public retrosheetId: string;
     public firstName: string;
     public lastName: string;
-    public birthDate?: Date;
+    public birthdate?: Date;
     public birthCity?: string;
     public birthStateProvince?: string;
     public birthCountry?: string;
     public deathDate?: Date;
-    public deathCity: string;
-    public deathStateProvince: string;
-    public deathCountry: string;
+    public deathCity?: string;
+    public deathStateProvince?: string;
+    public deathCountry?: string;
     public primaryPosition: string;
     public draftTeamId?: number;
     public draftYear?: number;

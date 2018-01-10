@@ -11,10 +11,10 @@
         </div>
         <div class="col-sm-3">
             <ul class="list-group">
-                <li class="list-group-item" *ngIf="player.birthDate"><strong>Birthdate:</strong> {{player.birthDate}}</li>
+                <li class="list-group-item" *ngIf="player.birthdate"><strong>Birth:</strong> {{player.birthdate}}</li>
                 <li class="list-group-item" *ngIf="player.birthStateProvince && player.birthCity"><strong>Birthplace:</strong> {{player.birthCity}}, {{player.birthStateProvince}}</li>
-                <li class="list-group-item"><strong>Height:</strong> {{player.height}}</li>
-                <li class="list-group-item"><strong>Weight:</strong> {{player.weight}}</li>
+                <li class="list-group-item" *ngIf="player.deathDate"><strong>Death:</strong> {{player.deathDate}}</li>
+                <li class="list-group-item" *ngIf="player.deathStateProvince && player.deathCity"><strong>Buried:</strong> {{player.deathCity}}, {{player.deathStateProvince}}</li>
             </ul>
         </div>
         <div class="col-sm-3"></div>
@@ -25,7 +25,7 @@
             <h3 class="panel-title">Standard Batting</h3>
         </div>
         <div class="panel-body">
-            <table class="table table-striped">
+            <table datatable [dtOptions]="dtOptions" class="row-border hover">
                 <thead>
                     <tr>
                         <th>Team</th>
