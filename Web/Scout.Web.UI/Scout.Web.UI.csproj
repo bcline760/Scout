@@ -7,6 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="src\app\player\player-routing.module.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Folder Include="wwwroot\" />
     </ItemGroup>
 
@@ -26,6 +30,10 @@
         <ProjectReference Include="..\..\Model\Scout.Model.Contract\Scout.Model.Contract.csproj" />
         <ProjectReference Include="..\..\Model\Scout.Model.DB\Scout.Model.DB.csproj" />
         <ProjectReference Include="..\..\Service\Scout.Service\Scout.Service.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <TypeScriptCompile Include="src\app\player\player-routing.module.ts" />
     </ItemGroup>
 
     <Target Name="Build Angular" Condition="'$(Configuration)'=='Release'" BeforeTargets="Build">

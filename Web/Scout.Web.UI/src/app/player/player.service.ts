@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
-import { Response } from '../model/api.model';
-import { Player, PlayerListItem, PlayerBattingStatistics, PlayerAdvancedBattingStatistics, PlayerPitchingStatistics } from '../model/player.model';
+import { Response } from '../../model/api.model';
+import { Player, PlayerListItem, PlayerBattingStatistics, PlayerAdvancedBattingStatistics, PlayerPitchingStatistics } from '../../model/player.model';
 
 
 @Injectable()

@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { PlayerService } from '../player.service';
+import { PlayerService } from '../player/player.service';
 import { Response, OperationResult } from '../../model/api.model';
 import { PlayerListItem } from '../../model/player.model';
 
