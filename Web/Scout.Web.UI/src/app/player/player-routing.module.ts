@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PlayerComponent } from './player.component';
-import { PlayerListComponent } from './player-list.component';
-import { PlayerDetailComponent } from './player-detail.component';
-import { PlayerSalaryComponent } from './player-salary.component';
+import { PlayerComponent, PlayerListComponent, PlayerDetailComponent, PlayerSalaryComponent } from './player.components';
 import { PlayerResolverService } from './player-resolver.service';
 
 const playerRoutes: Routes = [

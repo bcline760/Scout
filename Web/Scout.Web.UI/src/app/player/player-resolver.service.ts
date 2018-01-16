@@ -9,7 +9,7 @@ import {
 
 import { PlayerService } from './player.service';
 import { Response } from '../../model/api.model';
-import { Player } from '../../model/player.model';
+import { Player, PlayerListItem } from '../../model/player.model';
 
 @Injectable()
 export class PlayerResolverService implements Resolve<Response<Player>> {
@@ -28,5 +28,25 @@ export class PlayerResolverService implements Resolve<Response<Player>> {
                 return null;
             }
         });
+    }
+}
+
+@Injectable()
+export class PlayerListResolver implements Resolve<Response<PlayerListItem[]>>{
+    constructor(private service: PlayerService, private router: Router) {
+
+    }
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+        Response<PlayerListItem[]> |
+        Observable<Response<PlayerListItem[]>> |
+        Promise<Response<PlayerListItem[]>> {
+        return this.service.getPlayers().map(players => {
+            if (players) {
+                return players;
+            } else {
+                //Do error checking
+                return null;
+            }
+        })
     }
 }

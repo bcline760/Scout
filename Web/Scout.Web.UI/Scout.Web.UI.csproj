@@ -7,7 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="src\app\home\home-routing.module.ts" />
       <None Remove="src\app\player\player-routing.module.ts" />
+      <None Remove="src\app\player\player.components.ts" />
     </ItemGroup>
 
     <ItemGroup>
@@ -33,7 +35,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <TypeScriptCompile Include="src\app\home\home-routing.module.ts" />
       <TypeScriptCompile Include="src\app\player\player-routing.module.ts" />
+      <TypeScriptCompile Include="src\app\player\player.components.ts" />
     </ItemGroup>
 
     <Target Name="Build Angular" Condition="'$(Configuration)'=='Release'" BeforeTargets="Build">

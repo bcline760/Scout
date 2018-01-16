@@ -1,0 +1,15 @@
+.player-select-list {
+    width: 95%;
+    margin: 0 auto;
+}
+
+    .player-select-list li {
+        border: solid;
+        border-width: 1px;
+        border-color: #AAA;
+    }
+
+.player-select-list-letter {
+    font-size: large;
+    font-weight: bold;
+}
