@@ -1,11 +1,11 @@
 ﻿using Scout.Core.Contract;
-using Scout.Model.Contract;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Scout.Service.Contract
+namespace Scout.Core.Service
 {
     public interface IPlayerService
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Scout.Model.Contract
+namespace Scout.Core.Contract
 {
     [DataContract]
     public class PlayerListItem

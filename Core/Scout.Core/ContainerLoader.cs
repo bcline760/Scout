@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Extensions.DependencyInjection;
+
+using Autofac;
 using System.Reflection;
 
 namespace Scout.Core
 {
     public static class ContainerLoader
     {
-        public static void LoadContainers(IContainer container)
+        public static void LoadContainers(ContainerBuilder container)
         {
             string dirPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
             dirPath = dirPath.Substring(6);

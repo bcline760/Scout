@@ -2,69 +2,45 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Microsoft.EntityFrameworkCore;
-using Scout.Model.DB.Context;
+using Scout.Core.Contract;
+using Scout.Core.Repository;
 
 namespace Scout.Model.DB.Repository
 {
     public class PlayerRepository : DbRepository, IPlayerRepository
     {
-        public PlayerRepository(IScoutContext context) : base(context)
+        public PlayerRepository()
         {
         }
 
-        public async Task<int> CreatePlayer(Model.DB.Player player)
+        public async Task<int> CreatePlayer(Player player)
         {
-            Context.Player.Add(player);
-            await Context.SaveChangesAsync();
+            throw new System.NotImplementedException();
+        }
 
-            return player.PlayerId;
+        public async Task<List<Player>> FindPlayersByName(string name)
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task<List<Player>> GetAllPlayers()
         {
-            List<Player> allPlayers = await Context.Player.ToListAsync();
-
-            return allPlayers;
+            throw new System.NotImplementedException();
         }
 
-        public async Task<List<Model.DB.Player>> FindPlayersByName(string name)
+        public async Task<Player> GetPlayer(int playerId)
         {
-            List<Model.DB.Player> players = await Context.Player
-                .Where(p => p.FirstName.StartsWith(name) || p.LastName.StartsWith(name))
-                .Select(p => p)
-                .ToListAsync();
-
-            return players;
+            throw new System.NotImplementedException();
         }
 
-        public async Task<Model.DB.Player> GetPlayer(int playerId)
+        public async Task<Player> GetPlayer(string playerCode)
         {
-            Model.DB.Player player = await Context.Player.FirstOrDefaultAsync(p => p.PlayerId == playerId);
-
-            return player;
-        }
-
-        public async Task<Model.DB.Player> GetPlayer(string playerCode)
-        {
-            Model.DB.Player player = await Context.Player
-                .FirstOrDefaultAsync(p => p.PlayerIdentifier == playerCode);
-
-            return player;
+            throw new System.NotImplementedException();
         }
 
         public async Task<int> UpdatePlayer(Player player)
         {
-            var oldPlayer = await Context.Player
-                .FirstOrDefaultAsync(b => b.PlayerId == player.PlayerId);
-
-            if (oldPlayer != null)
-            {
-                Context.DbContext.Attach<Player>(player);
-                return await Context.SaveChangesAsync();
-            }
-            else
-                return -1; //MAGIC NUMBER
+            throw new System.NotImplementedException();
         }
     }
 }

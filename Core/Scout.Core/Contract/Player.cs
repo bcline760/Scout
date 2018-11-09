@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Scout.Model.Contract
+namespace Scout.Core.Contract
 {
     public class Player
     {
@@ -56,5 +56,7 @@ namespace Scout.Model.Contract
         public List<PlayerAdvancedBattingStatistics> AdvancedBattingStatistics { get; set; }
         [DataMember]
         public List<PlayerPitchingStatistics> PitchingStatistics { get; set; }
+        [DataMember]
+        public List<PlayerFieldingStatistics> FieldingStatistics { get; set; }
     }
 }

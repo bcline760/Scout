@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using Scout.Core.Contract;
-using Scout.Model.Contract;
-using Scout.Service.Contract;
+using Scout.Core.Service;
 
 namespace Scout.Web.UI.Controllers
 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,17 +7,13 @@ using System.Text;
 
 namespace Scout.Model.DB
 {
-    public class Franchise
+    public class FranchiseModel : ScoutModel
     {
-        [Key]
-        public int FranchiseId { get; set; }
-        [Column(TypeName = "varchar(4)"),Required]
+        [BsonElement("code")]
         public string FranchiseCode { get; set; }
-        [Column(TypeName = "varchar(64)"), Required]
+        [BsonElement("name")]
         public string FranchiseName { get; set; }
-        [Required]
+        [BsonElement("active")]
         public bool IsActive { get; set; }
-
-        public ICollection<Team> Teams { get; set; }
     }
 }

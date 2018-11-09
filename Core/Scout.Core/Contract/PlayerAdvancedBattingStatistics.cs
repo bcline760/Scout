@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Scout.Model.Contract
+namespace Scout.Core.Contract
 {
     public class PlayerAdvancedBattingStatistics : PlayerStatistics
     {

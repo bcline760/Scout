@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Scout.Model.Contract
+namespace Scout.Core.Contract
 {
     [DataContract]
     public class PlayerPitchingStatistics : PlayerStatistics

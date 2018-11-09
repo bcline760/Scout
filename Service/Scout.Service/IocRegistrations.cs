@@ -1,16 +1,15 @@
 ﻿using Scout.Core;
-using Scout.Service.Contract;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Scout.Core.Service;
+
+using Autofac;
 
 namespace Scout.Service
 {
     public class IocRegistrations : IRegister
     {
-        public void Register(IContainer container)
+        public void Register(ContainerBuilder container)
         {
-            container.RegisterType<IPlayerService, PlayerService>(DependencyLifetime.Singleton);
+            container.RegisterType<PlayerService>().As<IPlayerService>();
         }
     }
 }

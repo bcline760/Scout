@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
-using Scout.Model.DB.Context;
-using Scout.Model.DB.Repository;
-using Scout.Service.Contract;
+using Scout.Core.Service;
 using Scout.Service;
 
 namespace Scout.Web.UI
@@ -27,16 +24,6 @@ namespace Scout.Web.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ScoutContext>(ctx =>
-            {
-                ctx.UseSqlServer(Configuration["ConnectionString"]);
-            });
-            services.AddScoped<IScoutContext, ScoutContext>();
-            services.AddScoped<IPlayerRepository, PlayerRepository>();
-            services.AddScoped<IPlayerBattingRepository, PlayerBattingRepository>();
-            services.AddScoped<IPlayerPitchingRepository, PlayerPitchingRepository>();
-            services.AddScoped<ITeamRepository, TeamRepository>();
-            services.AddTransient<IPlayerService, PlayerService>();
             services.AddMvc();
         }
 

@@ -1,65 +1,56 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
-namespace Scout.Model.DB
+namespace Scout.Core.Contract
 {
+    [DataContract]
     public class Team
     {
-        public Team()
-        {
-        }
-
-        [Key]
         public int TeamId { get; set; }
         public int FranchiseId { get; set; }
         public int LeagueId { get; set; }
-        [Column(TypeName = "varchar(1)")]
+        [DataMember]
         public string DivisionCode { get; set; }
-        [ConcurrencyCheck]
-        [Column(TypeName = "varchar(3)"), Required]
+        [DataMember]
         public string TeamIdentifier { get; set; }
-        [Required]
+        [DataMember] 
         public short TeamYear { get; set; }
-        [ConcurrencyCheck]
-        [Column(TypeName = "varchar(64)"), Required]
+        [DataMember] 
         public string TeamName { get; set; }
-        [Required]
+        [DataMember] 
         public byte Wins { get; set; }
-        [Required]
+        [DataMember] 
         public byte Losses { get; set; }
-        [Required]
+        [DataMember]
         public bool WonDivision { get; set; }
-        [Required]
+        [DataMember]
         public bool WonWildCard { get; set; }
-        [Required]
+        [DataMember]
         public bool WonLeague { get; set; }
-        [Required]
+        [DataMember]
         public bool WonWorldSeries { get; set; }
-        [Required]
+        [DataMember]
         public short GamesPlayed { get; set; }
-        [Required]
+        [DataMember]
         public short GamesPlayedAtHome { get; set; }
-        [Column(TypeName = "varchar(128)")]
+        [DataMember]
         public string ParkName { get; set; }
-        [Required]
+        [DataMember]
         public int TotalAttendance { get; set; }
-        [Required]
+        [DataMember]
         public byte ParkFactorBatting { get; set; }
-        [Required]
+        [DataMember]
         public byte ParkFactorPitching { get; set; }
-        [Column(TypeName = "varchar(3)"), Required]
+        [DataMember]
         public string TeamRetrosheetId { get; set; }
-        [Column(TypeName = "varchar(3)"), Required]
+        [DataMember]
         public string TeamBaseballRefId { get; set; }
 
-        [ForeignKey("FK_Team_League")]
-        public League League { get; set; }
-        [ForeignKey("FK_Team_Franchise")]
-        public Franchise Franchise { get; set; }
-
+        [DataMember]
         public virtual ICollection<PlayerPitchingStatistics> PlayerPitchingStatistics { get; set; }
+        [DataMember]
         public virtual ICollection<PlayerBattingStatistics> PlayerBattingStatistics { get; set; }
+        [DataMember]
         public virtual ICollection<PlayerFieldingStatistics> PlayerFieldingStatistics { get; set; }
     }
 }

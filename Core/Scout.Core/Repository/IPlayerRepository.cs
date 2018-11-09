@@ -1,10 +1,9 @@
-﻿using Scout.Model.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Scout.Model.DB.Repository
+using Scout.Core.Contract;
+
+namespace Scout.Core.Repository
 {
     public interface IPlayerRepository
     {

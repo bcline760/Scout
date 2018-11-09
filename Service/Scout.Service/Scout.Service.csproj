@@ -1,14 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Scout.Core.Bus\Scout.Core.Bus.csproj" />
-    <ProjectReference Include="..\..\Core\Scout.Core.Contract\Scout.Core.Contract.csproj" />
-    <ProjectReference Include="..\..\Model\Scout.Model.Contract\Scout.Model.Contract.csproj" />
+    <ProjectReference Include="..\..\Core\Scout.Core\Scout.Core.csproj" />
     <ProjectReference Include="..\..\Model\Scout.Model.DB\Scout.Model.DB.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
 </Project>
