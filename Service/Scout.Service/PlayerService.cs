@@ -22,7 +22,7 @@ namespace Scout.Service
             _teamRepo = teamRepository;
         }
 
-        public async Task<ObjectModifyResult<int>> CreatePlayer(Player player)
+        public async Task<ObjectModifyResult<Guid>> CreatePlayer(Player player)
         {
             if (player == null)
                 throw new ArgumentNullException(nameof(player));
@@ -30,8 +30,8 @@ namespace Scout.Service
             int playerId = -1;
             int recordsModified = 0;
 
-            ObjectModifyResult<int> result = new ObjectModifyResult<int>();
-            playerId = await _player.CreatePlayer(player);
+            var result = new ObjectModifyResult<Guid>();
+            playerId = await _player.SaveAsync(player);
 
             result.RecordsModified = recordsModified;
 
@@ -40,7 +40,7 @@ namespace Scout.Service
 
         public async Task<List<PlayerListItem>> RetrievePlayers()
         {
-            var players = await _player.GetAllPlayers();
+            var players = await _player.LoadAllAsync();
 
             var playerList = players.Select(s => new PlayerListItem
             {
@@ -61,12 +61,12 @@ namespace Scout.Service
             List<Player> players = new List<Player>();
             if (!string.IsNullOrEmpty(request.PlayerName))
             {
-                var playerEntities = await _player.FindPlayersByName(request.PlayerName);
+                var playerEntities = await _player.FindPlayersByNameAsync(request.PlayerName);
                 players.AddRange(playerEntities);
             }
             else if (!string.IsNullOrEmpty(request.PlayerCode))
             {
-                var ply = await _player.GetPlayer(request.PlayerCode);
+                var ply = await _player.GetPlayerAsync(request.PlayerCode);
                 if (ply != null)
                     players.Add(ply);
             }
@@ -95,12 +95,12 @@ namespace Scout.Service
             return players;
         }
 
-        public async Task<ObjectModifyResult<int>> UpdatePlayer(Player player)
+        public async Task<ObjectModifyResult<Guid>> UpdatePlayer(Player player)
         {
-            int recordsModified = await _player.UpdatePlayer(player);
-            ObjectModifyResult<int> result = new ObjectModifyResult<int>
+            int recordsModified = await _player.SaveAsync(player);
+            var result = new ObjectModifyResult<Guid>
             {
-                PrimaryIdentifier = player.PlayerId,
+                PrimaryIdentifier = player.Id,
                 RecordsModified = recordsModified
             };
 

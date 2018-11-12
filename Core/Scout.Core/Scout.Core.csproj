@@ -10,8 +10,6 @@
     <Folder Include="Repository\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Repository\IPlayerBattingRepository.cs" />
-    <Compile Remove="Repository\IPlayerPitchingRepository.cs" />
     <Compile Remove="Repository\DbRepository.cs" />
   </ItemGroup>
   <ItemGroup>

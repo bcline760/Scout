@@ -6,9 +6,9 @@ namespace Scout.Model.DB
 {
     public class PlayerModel : ScoutModel
     {
-        [BsonElement("yr")]
+        [BsonElement("playerId")]
         public string PlayerIdentifier { get; set; }
-        [BsonElement("yr")]
+        [BsonElement("retroId")]
         public string RetrosheetId { get; set; }
         [BsonElement("fname")]
         public string FirstName { get; set; }
@@ -40,11 +40,5 @@ namespace Scout.Model.DB
         public short? Height { get; set; }
         [BsonElement("wt")]
         public short? Weight { get; set; }
-        [BsonElement("pitchingStats")]
-        public virtual ICollection<PlayerPitchingStatisticsModel> PlayerPitchingStatistics { get; set; }
-        [BsonElement("battingStats")]
-        public virtual ICollection<PlayerBattingStatisticsModel> PlayerBattingStatistics { get; set; }
-        [BsonElement("fieldingStats")]
-        public virtual ICollection<PlayerFieldingStatisticsModel> PlayerFieldingStatistics { get; set; }
     }
 }

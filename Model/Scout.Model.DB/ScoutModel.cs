@@ -10,7 +10,7 @@ namespace Scout.Model.DB
     [BsonIgnoreExtraElements]
     [BsonDiscriminator(RootClass = true)]
     [BsonKnownTypes(typeof(LeagueModel), typeof(PlayerModel), typeof(FranchiseModel),
-                    typeof(TeamModel))]
+                    typeof(TeamModel), typeof(PlayerStatisticsModel))]
     public abstract class ScoutModel
     {
         [BsonId(IdGenerator = typeof(GuidGenerator))]

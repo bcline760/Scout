@@ -15,10 +15,12 @@
     <Compile Remove="Context\IScoutContext.cs" />
     <Compile Remove="Context\ScoutContext.cs" />
     <Compile Remove="DbExtensions.cs" />
+    <Compile Remove="Repository\PlayerStatisticRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
   </ItemGroup>
 </Project>

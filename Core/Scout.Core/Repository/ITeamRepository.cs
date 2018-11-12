@@ -7,36 +7,8 @@ using Scout.Core.Contract;
 
 namespace Scout.Core.Repository
 {
-    public interface ITeamRepository
+    public interface ITeamRepository : IScoutRepository<Team>
     {
-        /// <summary>
-        /// Create a new team season
-        /// </summary>
-        /// <param name="team">The new team season entity to add to data store</param>
-        /// <returns></returns>
-        Task<int> CreateTeam(Team team);
-
-        /// <summary>
-        /// Update an existing team season
-        /// </summary>
-        /// <param name="team"></param>
-        /// <returns></returns>
-        Task<int> UpdateTeam(Team team);
-
-        /// <summary>
-        /// Delete a team season
-        /// </summary>
-        /// <param name="teamId"></param>
-        /// <returns></returns>
-        Task<int> DeleteTeam(int teamId);
-
-        /// <summary>
-        /// Get a team by the identifier
-        /// </summary>
-        /// <param name="teamId"></param>
-        /// <returns></returns>
-        Task<Team> GetTeam(int teamId);
-
         /// <summary>
         /// Get a single team year by the year and the team identifier
         /// </summary>

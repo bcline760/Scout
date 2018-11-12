@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Scout.Model.DB
 {
-    public class PlayerBattingStatisticsModel
+    public class PlayerBattingStatisticsModel : ScoutModel
     {
         [BsonElement("pa")]
         public short PlateAppearances { get; set; }

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Scout.Core.Contract
 {
-    public class Player
+    public class Player : ScoutEntity
     {
         public Player()
         {
@@ -13,8 +13,6 @@ namespace Scout.Core.Contract
             PitchingStatistics = new List<PlayerPitchingStatistics>();
         }
 
-        [DataMember]
-        public int PlayerId { get; set; }
         [DataMember]
         public string PlayerIdentifier { get; set; }
         [DataMember]

@@ -14,7 +14,7 @@ namespace Scout.Core.Service
         /// </summary>
         /// <param name="player">The player object to create</param>
         /// <returns>The database ID of the player created</returns>
-        Task<ObjectModifyResult<int>> CreatePlayer(Player player);
+        Task<ObjectModifyResult<Guid>> CreatePlayer(Player player);
 
         /// <summary>
         /// Get a list of all the players in the database
@@ -34,6 +34,6 @@ namespace Scout.Core.Service
         /// </summary>
         /// <param name="player">The player object to update</param>
         /// <returns>Boolean to indicate whether the player was updated</returns>
-        Task<ObjectModifyResult<int>> UpdatePlayer(Player player);
+        Task<ObjectModifyResult<Guid>> UpdatePlayer(Player player);
     }
 }

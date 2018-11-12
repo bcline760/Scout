@@ -2,7 +2,7 @@
 
 namespace Scout.Model.DB
 {
-    public class PlayerPitchingStatisticsModel
+    public class PlayerPitchingStatisticsModel : ScoutModel
     {
         [BsonElement("stint")]
         public byte PitchingStint { get; set; }
@@ -10,7 +10,7 @@ namespace Scout.Model.DB
         public short GamesWon { get; set; }
         [BsonElement("l")]
         public short GamesLost { get; set; }
-        [BsonElement("gp")] 
+        [BsonElement("gp")]
         public short GamesPlayed { get; set; }
         [BsonElement("gs")]
         public short GamesStarted { get; set; }

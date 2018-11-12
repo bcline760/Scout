@@ -3,22 +3,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
+using AutoMapper;
 using Scout.Core.Repository;
 using Scout.Core.Contract;
+using MongoDB.Driver;
 
 namespace Scout.Model.DB.Repository
 {
-    public class TeamRepository : DbRepository, ITeamRepository
+    public class TeamRepository : DbRepository<TeamModel>, ITeamRepository
     {
-        public async Task<int> CreateTeam(Team team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<int> DeleteTeam(int teamId)
-        {
-            throw new NotImplementedException();
-        }
+        public TeamRepository(IMongoDatabase db) : base(db)
+        { }
 
         public async Task<List<Team>> FindTeamsByCode(string teamCode)
         {
@@ -45,17 +40,30 @@ namespace Scout.Model.DB.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<Team> GetTeam(int teamId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Team> GetTeamByYearCode(short year, string code)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<int> UpdateTeam(Team team)
+        public async Task<List<Team>> LoadAllAsync()
+        {
+            var teams = await GetAllAsync();
+
+            return teams.Select(Mapper.Map<Team>).ToList();
+        }
+
+        public async Task<int> SaveAsync(Team model)
+        {
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
+
+            var teamModel = Mapper.Map<TeamModel>(model);
+            var result = await SaveAsync(model);
+
+            return result;
+        }
+
+        public async new Task<Team> GetAsync(Guid id)
         {
             throw new NotImplementedException();
         }

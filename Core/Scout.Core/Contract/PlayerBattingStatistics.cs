@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Scout.Core.Contract
 {
-    public class PlayerBattingStatistics:PlayerStatistics
+    public class PlayerBattingStatistics : PlayerStatistics
     {
         [DataMember]
         public short PlateAppearances { get; set; }

@@ -1,46 +1,58 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+
+using MongoDB.Bson;
+using MongoDB.Driver;
+using AutoMapper;
 
 using Scout.Core.Contract;
 using Scout.Core.Repository;
 
 namespace Scout.Model.DB.Repository
 {
-    public class PlayerRepository : DbRepository, IPlayerRepository
+    public class PlayerRepository : DbRepository<PlayerModel>, IPlayerRepository
     {
-        public PlayerRepository()
+        public PlayerRepository(IMongoDatabase db) : base(db)
         {
+
         }
 
-        public async Task<int> CreatePlayer(Player player)
+        public async Task<List<Player>> FindPlayersByNameAsync(string name)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public async Task<List<Player>> FindPlayersByName(string name)
+        public async Task<Player> GetPlayerAsync(string playerCode)
         {
-            throw new System.NotImplementedException();
+            var filterDef = Builders<PlayerModel>.Filter.Eq("playerId", playerCode);
+            var results = await _collection.FindAsync<PlayerModel>(filterDef);
+
+            return results.Any() ? Mapper.Map<Player>(results.First()) : null;
         }
 
-        public async Task<List<Player>> GetAllPlayers()
+        public async Task<List<Player>> LoadAllAsync()
         {
-            throw new System.NotImplementedException();
+            var players = await GetAllAsync();
+
+            return players.Select(Mapper.Map<Player>).ToList();
         }
 
-        public async Task<Player> GetPlayer(int playerId)
+        public async Task<int> SaveAsync(Player model)
         {
-            throw new System.NotImplementedException();
+            var playerModel = Mapper.Map<PlayerModel>(model);
+            long updateCount = await base.SaveAsync(playerModel);
+
+            return (int)updateCount;
         }
 
-        public async Task<Player> GetPlayer(string playerCode)
+        public async new Task<Player> GetAsync(Guid id)
         {
-            throw new System.NotImplementedException();
-        }
+            var playerModel = await base.GetAsync(id);
 
-        public async Task<int> UpdatePlayer(Player player)
-        {
-            throw new System.NotImplementedException();
+            var player = playerModel == null ? Mapper.Map<Player>(playerModel) : null;
+            return player;
         }
     }
 }

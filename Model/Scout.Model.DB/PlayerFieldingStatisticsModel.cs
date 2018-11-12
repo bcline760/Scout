@@ -2,7 +2,7 @@
 
 namespace Scout.Model.DB
 {
-    public class PlayerFieldingStatisticsModel
+    public class PlayerFieldingStatisticsModel : ScoutModel
     {
         public PlayerFieldingStatisticsModel() { }
 
