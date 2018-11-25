@@ -11,9 +11,11 @@ namespace Scout.Core
     {
         public static void LoadContainers(ContainerBuilder container)
         {
-            string dirPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
-            dirPath = dirPath.Substring(6);
-            string[] assemblies = Directory.GetFiles(dirPath, "Scout.*.dll");
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            var uriBuilder = new UriBuilder(codeBase);
+            var path = Path.GetDirectoryName(Uri.UnescapeDataString(uriBuilder.Path));
+
+            string[] assemblies = Directory.GetFiles(path, "Scout.*.dll");
 
             //Assembly assembly = Assembly.
             Type registerType = typeof(IRegister);

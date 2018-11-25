@@ -1,10 +1,12 @@
-﻿using Scout.Core.Repository;
-using Scout.Model.DB.Repository;
-
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Autofac;
 
-using MongoDB.Driver;
-namespace Scout.Core.Context
+using Scout.Model.DB.Context;
+using Scout.Core.Repository;
+using Scout.Model.DB.Repository;
+using Scout.Core;
+namespace Scout.Model.DB
 {
     public class IocRegistrations : IRegister
     {
@@ -12,17 +14,19 @@ namespace Scout.Core.Context
         {
             container.Register(r =>
             {
-                var client = new MongoClient(new MongoClientSettings
-                {
+                var config = r.Resolve<IConfiguration>();
 
-                });
+                var builder = new DbContextOptionsBuilder<ScoutContext>()
+                    .UseSqlServer(config.GetConnectionString("default"))
+                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
-                var db = client.GetDatabase("");
+                var context = new ScoutContext(builder.Options);
 
-                return db;
-            }).As<IMongoDatabase>();
+                return context;
+            }).As<IScoutContext>().SingleInstance();
 
-            container.RegisterType<PlayerRepository>().As<IPlayerRepository>();
+            container.RegisterType<PlayerRepository>().As<IPlayerRepository>().InstancePerDependency();
+            container.RegisterType<TeamRepository>().As<ITeamRepository>().InstancePerDependency();
         }
     }
 }

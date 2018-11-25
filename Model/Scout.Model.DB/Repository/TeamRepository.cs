@@ -6,13 +6,13 @@ using System.Linq;
 using AutoMapper;
 using Scout.Core.Repository;
 using Scout.Core.Contract;
-using MongoDB.Driver;
+using Scout.Model.DB.Context;
 
 namespace Scout.Model.DB.Repository
 {
     public class TeamRepository : DbRepository<TeamModel>, ITeamRepository
     {
-        public TeamRepository(IMongoDatabase db) : base(db)
+        public TeamRepository(IScoutContext db) : base(db)
         { }
 
         public async Task<List<Team>> FindTeamsByCode(string teamCode)
@@ -63,7 +63,7 @@ namespace Scout.Model.DB.Repository
             return result;
         }
 
-        public async new Task<Team> GetAsync(Guid id)
+        public async new Task<Team> GetAsync(int id)
         {
             throw new NotImplementedException();
         }

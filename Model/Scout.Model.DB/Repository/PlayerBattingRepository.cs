@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 using AutoMapper;
-using MongoDB.Driver;
 using Scout.Core.Contract;
 using Scout.Core.Repository;
+using Scout.Model.DB.Context;
 
 namespace Scout.Model.DB.Repository
 {
     public class PlayerBattingRepository : DbRepository<PlayerBattingStatisticsModel>, IPlayerBattingRepository
     {
-        public PlayerBattingRepository(IMongoDatabase db) : base(db)
+        public PlayerBattingRepository(IScoutContext context) : base(context)
         {
         }
 
@@ -34,7 +35,7 @@ namespace Scout.Model.DB.Repository
             return (int)result;
         }
 
-        public async new Task<PlayerBattingStatistics> GetAsync(Guid id)
+        public async new Task<PlayerBattingStatistics> GetAsync(int id)
         {
             var result = await base.GetAsync(id);
 
@@ -43,18 +44,16 @@ namespace Scout.Model.DB.Repository
 
         public async Task<List<PlayerBattingStatistics>> GetByTeam(string teamId)
         {
-            var filterDef = Builders<PlayerBattingStatisticsModel>.Filter.Eq("teamId", teamId);
-            var results = await _collection.FindAsync<PlayerBattingStatisticsModel>(filterDef);
+            var results = await (from c in Context.PlayerBattingStatistics where c.TeamIdentifier == teamId select c).ToListAsync();
 
-            return results.ToList().Select(Mapper.Map<PlayerBattingStatistics>).ToList();
+            return results.Select(Mapper.Map<PlayerBattingStatistics>).ToList();
         }
 
         public async Task<List<PlayerBattingStatistics>> GetByPlayer(string playerId)
         {
-            var filterDef = Builders<PlayerBattingStatisticsModel>.Filter.Eq("playerId", playerId);
-            var results = await _collection.FindAsync<PlayerBattingStatisticsModel>(filterDef);
+            var results = await (from c in Context.PlayerBattingStatistics where c.PlayerIdentifier == playerId select c).ToListAsync();
 
-            return results.ToList().Select(Mapper.Map<PlayerBattingStatistics>).ToList();
+            return results.Select(Mapper.Map<PlayerBattingStatistics>).ToList();
         }
     }
 }

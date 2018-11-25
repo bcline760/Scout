@@ -1,49 +1,50 @@
 ﻿
-using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Scout.Model.DB
 {
-    public class PlayerBattingStatisticsModel : ScoutModel
+    public class PlayerBattingStatisticsModel : PlayerStatisticsModel
     {
-        [BsonElement("pa")]
+        [Column(TypeName ="smallint"),Required]
         public short PlateAppearances { get; set; }
-        [BsonElement("ab")]
+        [Column(TypeName = "smallint"), Required]
         public short AtBats { get; set; }
-        [BsonElement("h")]
+        [Column(TypeName = "smallint"), Required]
         public short Hits { get; set; }
-        [BsonElement("db")]
+        [Column(TypeName = "smallint"), Required]
         public short Doubles { get; set; }
-        [BsonElement("tr")]
+        [Column(TypeName = "smallint"), Required]
         public short Triples { get; set; }
-        [BsonElement("hr")]
+        [Column(TypeName = "smallint"), Required]
         public short Homeruns { get; set; }
-        [BsonElement("rbi")]
+        [Column(TypeName = "smallint"), Required]
         public short RunsBattedIn { get; set; }
-        [BsonElement("sh")]
+        [Column(TypeName = "smallint"), Required]
         public short SacrificeHits { get; set; }
-        [BsonElement("sf")]
+        [Column(TypeName = "smallint"), Required]
         public short SacrificeFlies { get; set; }
-        [BsonElement("bb")]
+        [Column(TypeName = "smallint"), Required]
         public short Walks { get; set; }
-        [BsonElement("ibb")]
+        [Column(TypeName = "smallint"), Required]
         public short IntentionalWalks { get; set; }
-        [BsonElement("hbp")]
+        [Column(TypeName = "smallint"), Required]
         public short HitByPitch { get; set; }
-        [BsonElement("k")]
+        [Column(TypeName = "smallint"), Required]
         public short Strikeouts { get; set; }
-        [BsonElement("sb")]
+        [Column(TypeName = "smallint"), Required]
         public short StolenBases { get; set; }
-        [BsonElement("cs")]
+        [Column(TypeName = "smallint"), Required]
         public short CaughtStealing { get; set; }
-        [BsonElement("gidp")]
+        [Column(TypeName = "smallint"), Required]
         public short GroundedIntoDoublePlay { get; set; }
-        [BsonElement("avg")]
+        [Column(TypeName = "decimal(0,3)"), Required]
         public decimal BattingAverage { get; set; }
-        [BsonElement("obp")]
+        [Column(TypeName = "decimal(0,3)"), Required]
         public decimal OnBasePercentage { get; set; }
-        [BsonElement("slg")]
+        [Column(TypeName = "decimal(0,3)"), Required]
         public decimal SluggingPercentage { get; set; }
-        [BsonElement("ops")]
+        [Column(TypeName = "decimal(0,3)"), Required]
         public decimal OnBasePlusSlugging { get; set; }
     }
 }

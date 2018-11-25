@@ -12,15 +12,20 @@
     <Folder Include="Repository\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Context\IScoutContext.cs" />
-    <Compile Remove="Context\ScoutContext.cs" />
-    <Compile Remove="DbExtensions.cs" />
     <Compile Remove="Repository\PlayerStatisticRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+    <PackageReference Include="FlexLabs.EntityFrameworkCore.Upsert" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
   </ItemGroup>
 </Project>

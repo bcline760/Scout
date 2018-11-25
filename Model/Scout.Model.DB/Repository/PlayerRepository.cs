@@ -3,56 +3,54 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
-using MongoDB.Bson;
-using MongoDB.Driver;
 using AutoMapper;
 
 using Scout.Core.Contract;
 using Scout.Core.Repository;
+using Scout.Model.DB.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Scout.Model.DB.Repository
 {
     public class PlayerRepository : DbRepository<PlayerModel>, IPlayerRepository
     {
-        public PlayerRepository(IMongoDatabase db) : base(db)
+        public PlayerRepository(IScoutContext db) : base(db)
         {
 
         }
 
         public async Task<List<Player>> FindPlayersByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            var playerList = await Context.Player
+                .Where(p => p.FirstName.StartsWith(name) || p.LastName.StartsWith(name))
+                .Select(p => p)
+                .ToListAsync();
+
+            return playerList.Select(Mapper.Map<Player>).ToList();
         }
 
         public async Task<Player> GetPlayerAsync(string playerCode)
         {
-            var filterDef = Builders<PlayerModel>.Filter.Eq("playerId", playerCode);
-            var results = await _collection.FindAsync<PlayerModel>(filterDef);
+            var player = await (from p in Context.Player where p.PlayerIdentifier == playerCode select p).FirstOrDefaultAsync();
 
-            return results.Any() ? Mapper.Map<Player>(results.First()) : null;
+            return Mapper.Map<Player>(player);
         }
 
         public async Task<List<Player>> LoadAllAsync()
         {
-            var players = await GetAllAsync();
-
+            var players = await base.GetAllAsync();
             return players.Select(Mapper.Map<Player>).ToList();
         }
 
         public async Task<int> SaveAsync(Player model)
         {
-            var playerModel = Mapper.Map<PlayerModel>(model);
-            long updateCount = await base.SaveAsync(playerModel);
-
-            return (int)updateCount;
+            return await base.SaveAsync(Mapper.Map<PlayerModel>(model));
         }
 
-        public async new Task<Player> GetAsync(Guid id)
+        public async new Task<Player> GetAsync(int id)
         {
-            var playerModel = await base.GetAsync(id);
-
-            var player = playerModel == null ? Mapper.Map<Player>(playerModel) : null;
-            return player;
+            var player = await base.GetAsync(id);
+            return Mapper.Map<Player>(player);
         }
     }
 }

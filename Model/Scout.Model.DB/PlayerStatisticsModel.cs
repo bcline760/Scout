@@ -1,20 +1,23 @@
 ﻿using System;
-using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Scout.Model.DB
 {
-    [BsonKnownTypes(typeof(PlayerBattingStatisticsModel), typeof(PlayerFieldingStatisticsModel),
-                    typeof(PlayerPitchingStatisticsModel))]
-    [BsonIgnoreExtraElements]
     public abstract class PlayerStatisticsModel : ScoutModel
     {
-        [BsonElement("playerId")]
+        [Column(TypeName = "varchar(16)"), Required]
         public string PlayerIdentifier { get; set; }
-        [BsonElement("teamId")]
+        [Column(TypeName = "varchar(16)"), Required]
         public string TeamIdentifier { get; set; }
-        [BsonElement("teamName")]
+        [Column(TypeName = "varchar(32)"), Required]
         public string TeamName { get; set; }
-        [BsonElement("teamYr")]
+        [Column(TypeName = "smallint"), Required]
         public short TeamYear { get; set; }
+
+        [ForeignKey("FK_PlayerFieldingStatistics_Player")]
+        public virtual PlayerModel Player { get; set; }
+        [ForeignKey("FK_PlayerFieldingStatistics_Team")]
+        public virtual TeamModel Team { get; set; }
     }
 }

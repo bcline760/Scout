@@ -8,6 +8,7 @@
     <Folder Include="Contract\" />
     <Folder Include="Service\" />
     <Folder Include="Repository\" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Repository\DbRepository.cs" />
@@ -15,5 +16,9 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.1.1" />
   </ItemGroup>
 </Project>

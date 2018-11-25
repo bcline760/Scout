@@ -1,50 +1,51 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Scout.Model.DB
 {
-    public class PlayerPitchingStatisticsModel : ScoutModel
+    public class PlayerPitchingStatisticsModel : PlayerStatisticsModel
     {
-        [BsonElement("stint")]
+        [Column(TypeName = "tinyint"), Required]
         public byte PitchingStint { get; set; }
-        [BsonElement("w")]
+        [Column(TypeName = "smallint"), Required]
         public short GamesWon { get; set; }
-        [BsonElement("l")]
+        [Column(TypeName = "smallint"), Required]
         public short GamesLost { get; set; }
-        [BsonElement("gp")]
+        [Column(TypeName = "smallint"), Required]
         public short GamesPlayed { get; set; }
-        [BsonElement("gs")]
+        [Column(TypeName = "smallint"), Required]
         public short GamesStarted { get; set; }
-        [BsonElement("cg")]
+        [Column(TypeName = "smallint"), Required]
         public short CompleteGames { get; set; }
-        [BsonElement("so")]
+        [Column(TypeName = "smallint"), Required]
         public short Shutouts { get; set; }
-        [BsonElement("sv")]
+        [Column(TypeName = "smallint"), Required]
         public short GamesSaved { get; set; }
-        [BsonElement("ip")]
+        [Column(TypeName = "decimal(3,2)"), Required]
         public decimal InningsPitched { get; set; }
-        [BsonElement("h")]
+        [Column(TypeName = "smallint"), Required]
         public short Hits { get; set; }
-        [BsonElement("r")]
+        [Column(TypeName = "smallint"), Required]
         public short Runs { get; set; }
-        [BsonElement("er")]
+        [Column(TypeName = "smallint"), Required]
         public short EarnedRuns { get; set; }
-        [BsonElement("bb")]
+        [Column(TypeName = "smallint"), Required]
         public short Walks { get; set; }
-        [BsonElement("k")]
+        [Column(TypeName = "smallint"), Required]
         public short Strikeouts { get; set; }
-        [BsonElement("hr")]
+        [Column(TypeName = "smallint"), Required]
         public short Homeruns { get; set; }
-        [BsonElement("era")]
-        public float EarnedRunAverage { get; set; }
-        [BsonElement("ibb")]
+        [Column(TypeName = "smallint"), Required]
+        public decimal EarnedRunAverage { get; set; }
+        [Column(TypeName = "smallint"), Required]
         public short IntentionalWalks { get; set; }
-        [BsonElement("hb")]
+        [Column(TypeName = "smallint"), Required]
         public short HitBatsmen { get; set; }
-        [BsonElement("wp")]
+        [Column(TypeName = "smallint"), Required]
         public short WildPitches { get; set; }
-        [BsonElement("bk")]
+        [Column(TypeName = "smallint"), Required]
         public short Balks { get; set; }
-        [BsonElement("gidp")]
+        [Column(TypeName = "smallint"), Required]
         public short TimesInducedGidp { get; set; }
     }
 }

@@ -1,44 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-using MongoDB.Bson.Serialization.Attributes;
 namespace Scout.Model.DB
 {
     public class PlayerModel : ScoutModel
     {
-        [BsonElement("playerId")]
+        [ConcurrencyCheck]
+        [Column(TypeName = "varchar(16)"), Required]
         public string PlayerIdentifier { get; set; }
-        [BsonElement("retroId")]
+        [Column(TypeName = "varchar(16)"), Required]
         public string RetrosheetId { get; set; }
-        [BsonElement("fname")]
+        [Column(TypeName = "varchar(32)"), Required]
         public string FirstName { get; set; }
-        [BsonElement("lname")]
+        [ConcurrencyCheck]
+        [Column(TypeName = "varchar(32)"), Required]
         public string LastName { get; set; }
-        [BsonElement("bdate")]
-        public DateTime? Birthdate { get; set; }
-        [BsonElement("bcity")]
+        public Nullable<System.DateTime> Birthdate { get; set; }
+        [Column(TypeName = "varchar(64)"), Required]
         public string BirthCity { get; set; }
-        [BsonElement("bstate")]
+        [Column(TypeName = "varchar(64)")]
         public string BirthStateProvince { get; set; }
-        [BsonElement("bcountry")]
+        [Column(TypeName = "varchar(64)"), Required]
         public string BirthCountry { get; set; }
-        [BsonElement("ddate")]
-        public DateTime? DeathDate { get; set; }
-        [BsonElement("dcity")]
+        public Nullable<System.DateTime> DeathDate { get; set; }
+        [Column(TypeName = "varchar(64)")]
         public string DeathCity { get; set; }
-        [BsonElement("dstate")]
+        [Column(TypeName = "varchar(64)")]
         public string DeathStateProvince { get; set; }
-        [BsonElement("dcountry")]
+        [Column(TypeName = "varchar(64)")]
         public string DeathCountry { get; set; }
-        [BsonElement("mlbDebut")]
-        public DateTime? MajorLeagueDebut { get; set; }
-        [BsonElement("bats")]
+        public Nullable<System.DateTime> MajorLeagueDebut { get; set; }
+        [Column(TypeName = "varchar(1)")]
         public string Bats { get; set; }
-        [BsonElement("throws")]
+        [Column(TypeName = "varchar(1)")]
         public string Throws { get; set; }
-        [BsonElement("ht")]
-        public short? Height { get; set; }
-        [BsonElement("wt")]
-        public short? Weight { get; set; }
+        public Nullable<short> Height { get; set; }
+        public Nullable<short> Weight { get; set; }
+
+        public virtual ICollection<PlayerPitchingStatisticsModel> PlayerPitchingStatistics { get; set; }
+        public virtual ICollection<PlayerBattingStatisticsModel> PlayerBattingStatistics { get; set; }
+        public virtual ICollection<PlayerFieldingStatisticsModel> PlayerFieldingStatistics { get; set; }
     }
 }

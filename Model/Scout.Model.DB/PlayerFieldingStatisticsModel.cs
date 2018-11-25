@@ -1,38 +1,53 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Scout.Model.DB
 {
-    public class PlayerFieldingStatisticsModel : ScoutModel
+    public class PlayerFieldingStatisticsModel : PlayerStatisticsModel
     {
         public PlayerFieldingStatisticsModel() { }
 
-        [BsonElement("yr")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short Year { get; set; }
-        [BsonElement("st")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short Stint { get; set; }
-        [BsonElement("pos")]
+        [Column(TypeName = "varchar(2)")]
+        [Required]
         public string Position { get; set; }
-        [BsonElement("g")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short Games { get; set; }
-        [BsonElement("gs")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short GamesStarted { get; set; }
-        [BsonElement("inn")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short InningOuts { get; set; }
-        [BsonElement("po")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short PutOuts { get; set; }
-        [BsonElement("as")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short Assists { get; set; }
-        [BsonElement("e")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short Errors { get; set; }
-        [BsonElement("dp")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short DoublePlays { get; set; }
-        [BsonElement("wp")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short WildPitches { get; set; }
-        [BsonElement("sb")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short StolenBases { get; set; }
-        [BsonElement("cs")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short CaughtStealing { get; set; }
-        [BsonElement("zr")]
+        [Column(TypeName = "smallint")]
+        [Required]
         public short ZoneRating { get; set; }
     }
 }

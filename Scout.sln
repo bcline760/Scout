@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Model.DB", "Model\Scout.Model.DB\Scout.Model.DB.csproj", "{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Model.DB", "Model\Scout.Model.DB\Scout.Model.DB.csproj", "{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Core", "Core\Scout.Core\Scout.Core.csproj", "{4A5F6A91-2D63-47C6-85AF-798161ECE988}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Core", "Core\Scout.Core\Scout.Core.csproj", "{4A5F6A91-2D63-47C6-85AF-798161ECE988}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Service", "Service\Scout.Service\Scout.Service.csproj", "{7F209AA1-B8BC-4DEE-B818-2A7CB16C2081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Service", "Service\Scout.Service\Scout.Service.csproj", "{7F209AA1-B8BC-4DEE-B818-2A7CB16C2081}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Web.UI", "Web\Scout.Web.UI\Scout.Web.UI.csproj", "{94D878BC-88EC-49F7-B43F-FE9AE4ED36A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Web.UI", "Web\Scout.Web.UI\Scout.Web.UI.csproj", "{94D878BC-88EC-49F7-B43F-FE9AE4ED36A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

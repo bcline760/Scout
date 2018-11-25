@@ -6,9 +6,9 @@ using Scout.Core.Contract;
 
 namespace Scout.Model.DB
 {
-    public class MongoDBMap : Profile
+    public class DatabaseModelMap : Profile
     {
-        public MongoDBMap()
+        public DatabaseModelMap()
         {
             CreateMap<PlayerModel, Player>().ReverseMap();
             CreateMap<TeamModel, Team>().ReverseMap();

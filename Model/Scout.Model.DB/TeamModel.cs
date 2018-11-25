@@ -1,44 +1,55 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Scout.Model.DB
 {
-    public class TeamModel:ScoutModel
+    public class TeamModel : ScoutModel
     {
-        [BsonElement("div")]
+        public int FranchiseId { get; set; }
+        public int LeagueId { get; set; }
+        [Column(TypeName = "varchar(1)")]
         public string DivisionCode { get; set; }
-        [BsonElement("teamId")]
+        [ConcurrencyCheck]
+        [Column(TypeName = "varchar(3)"), Required]
         public string TeamIdentifier { get; set; }
-        [BsonElement("yr")]
+        [Required]
         public short TeamYear { get; set; }
-        [BsonElement("name")]
+        [ConcurrencyCheck]
+        [Column(TypeName = "varchar(64)"), Required]
         public string TeamName { get; set; }
-        [BsonElement("win")]
+        [Required]
         public byte Wins { get; set; }
-        [BsonElement("loss")]
+        [Required]
         public byte Losses { get; set; }
-        [BsonElement("wonDiv")]
+        [Required]
         public bool WonDivision { get; set; }
-        [BsonElement("wonWc")]
+        [Required]
         public bool WonWildCard { get; set; }
-        [BsonElement("wonLg")]
+        [Required]
         public bool WonLeague { get; set; }
-        [BsonElement("champ")]
+        [Required]
         public bool WonWorldSeries { get; set; }
-        [BsonElement("gp")]
+        [Required]
         public short GamesPlayed { get; set; }
-        [BsonElement("gpAtHome")]
+        [Required]
         public short GamesPlayedAtHome { get; set; }
-        [BsonElement("park")]
+        [Column(TypeName = "varchar(128)")]
         public string ParkName { get; set; }
-        [BsonElement("attendance")]
+        [Required]
         public int TotalAttendance { get; set; }
-        [BsonElement("pfBatting")]
+        [Required]
         public byte ParkFactorBatting { get; set; }
-        [BsonElement("pfPitching")]
+        [Required]
         public byte ParkFactorPitching { get; set; }
-        [BsonElement("retroId")]
+        [Column(TypeName = "varchar(3)"), Required]
         public string TeamRetrosheetId { get; set; }
-        [BsonElement("bbrefId")]
+        [Column(TypeName = "varchar(3)"), Required]
         public string TeamBaseballRefId { get; set; }
+
+        [ForeignKey("FK_Team_League")]
+        public LeagueModel League { get; set; }
+        [ForeignKey("FK_Team_Franchise")]
+        public FranchiseModel Franchise { get; set; }
     }
 }

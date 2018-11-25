@@ -26,7 +26,7 @@ namespace Scout.Web.UI.Controllers
         [ProducesResponseType(typeof(ApiResponse<List<PlayerListItem>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll()
         {
-            var serviceResult = await ExecuteServiceMethod<List<PlayerListItem>>(_service.RetrievePlayers, "RetrievePlayers", Core.ApiStatusCode.OK);
+            var serviceResult = await ExecuteServiceMethod(_service.RetrievePlayers, "RetrievePlayers", Core.ApiStatusCode.OK);
 
             return serviceResult;
         }

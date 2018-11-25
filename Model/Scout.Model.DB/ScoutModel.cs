@@ -1,27 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace Scout.Model.DB
 {
-    [BsonIgnoreExtraElements]
-    [BsonDiscriminator(RootClass = true)]
-    [BsonKnownTypes(typeof(LeagueModel), typeof(PlayerModel), typeof(FranchiseModel),
-                    typeof(TeamModel), typeof(PlayerStatisticsModel))]
     public abstract class ScoutModel
     {
-        [BsonId(IdGenerator = typeof(GuidGenerator))]
-        public Guid Id { get; set; }
-        [BsonElement("createdAt")]
+        [Key]
+        public int Id { get; set; }
+        [ConcurrencyCheck,Required]
         public DateTime CreatedAt { get; set; }
-        [BsonElement("updatedAt")]
+        
         public DateTime? UpdatedAt { get; set; }
-        [BsonElement("updatedBy")]
+        [Column(TypeName = "varchar(32)")]
         public string UpdatedBy { get; set; }
-        [BsonElement("createdBy")]
+        [Column(TypeName = "varchar(32)")]
         public string CreatedBy { get; set; }
     }
 }
