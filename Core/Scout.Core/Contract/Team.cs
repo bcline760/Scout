@@ -4,10 +4,11 @@ using System.Runtime.Serialization;
 namespace Scout.Core.Contract
 {
     [DataContract]
-    public class Team
+    public class Team : ScoutEntity
     {
-        public int TeamId { get; set; }
+        [DataMember]
         public int FranchiseId { get; set; }
+        [DataMember]
         public int LeagueId { get; set; }
         [DataMember]
         public string DivisionCode { get; set; }

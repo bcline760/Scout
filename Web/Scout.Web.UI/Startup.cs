@@ -1,5 +1,4 @@
-using System;
-using System.Threading.Tasks;
+﻿using System;
 using System.IO;
 
 using Microsoft.AspNetCore.Builder;
@@ -33,7 +32,7 @@ namespace Scout.Web.UI
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterInstance<IConfiguration>(Configuration);
-            ContainerLoader.LoadContainers(builder);
+            //ContainerLoader.LoadContainers(builder);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,8 +48,8 @@ namespace Scout.Web.UI
                 await next();
 
                 if (context.Response.StatusCode == 404 &&
-              !Path.HasExtension(context.Request.Path.Value) &&
-              !context.Request.Path.Value.StartsWith("/api/", StringComparison.CurrentCulture))
+                      !Path.HasExtension(context.Request.Path.Value) &&
+                      !context.Request.Path.Value.StartsWith("/api/", StringComparison.CurrentCulture))
                 {
                     context.Request.Path = "/index.html";
                     await next();

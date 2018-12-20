@@ -6,11 +6,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Scout.Core\Scout.Core.csproj" />
-    <ProjectReference Include="..\..\Model\Scout.Model.DB\Scout.Model.DB.csproj" />
+    <ProjectReference Include="..\..\Model\Scout.Model.DB.Mongo\Scout.Model.DB.Mongo.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 </Project>

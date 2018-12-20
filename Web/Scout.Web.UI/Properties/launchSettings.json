@@ -1,10 +1,10 @@
-{
+﻿{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:59894/",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:43915",
+      "sslPort": 44365
     }
   },
   "profiles": {
@@ -18,10 +18,10 @@
     "Scout.Web.UI": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:59895/"
+      }
     }
   }
 }

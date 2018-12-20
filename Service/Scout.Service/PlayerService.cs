@@ -22,37 +22,6 @@ namespace Scout.Service
             _teamRepo = teamRepository;
         }
 
-        public async Task<ObjectModifyResult<Guid>> CreatePlayer(Player player)
-        {
-            if (player == null)
-                throw new ArgumentNullException(nameof(player));
-
-            int playerId = -1;
-            int recordsModified = 0;
-
-            var result = new ObjectModifyResult<Guid>();
-            playerId = await _player.SaveAsync(player);
-
-            result.RecordsModified = recordsModified;
-
-            return result;
-        }
-
-        public async Task<List<PlayerListItem>> RetrievePlayers()
-        {
-            var players = await _player.LoadAllAsync();
-
-            var playerList = players.Select(s => new PlayerListItem
-            {
-                PlayerCode = s.PlayerIdentifier,
-                FirstName = s.FirstName,
-                LastName = s.LastName,
-                PlayerRetrosheetId = s.RetrosheetId
-            }).ToList();
-
-            return playerList;
-        }
-
         public async Task<List<Player>> FindPlayers(PlayerSearchRequest request)
         {
             if (request == null)
@@ -95,16 +64,97 @@ namespace Scout.Service
             return players;
         }
 
-        public async Task<ObjectModifyResult<Guid>> UpdatePlayer(Player player)
+        public async Task<ObjectModifyResult<int>> SaveAsync(Player contract)
         {
-            int recordsModified = await _player.SaveAsync(player);
-            var result = new ObjectModifyResult<Guid>
-            {
-                PrimaryIdentifier = player.Id,
-                RecordsModified = recordsModified
-            };
+            if (contract == null)
+                throw new ArgumentNullException(nameof(contract));
 
-            return result;
+            int playerId = await _player.SaveAsync(contract);
+            var modified = new ObjectModifyResult<int>();
+
+            if (playerId > 0)
+            {
+                modified.PrimaryIdentifier = playerId;
+                modified.RecordsModified = 1;
+            }
+
+            return modified;
+        }
+
+        public async Task<IEnumerable<Player>> GetAllAsync()
+        {
+            var players = await _player.LoadAllAsync();
+            foreach (var player in players)
+            {
+                //Calculate advanced batting metrics
+                player.AdvancedBattingStatistics = player.BattingStatistics.Select(a => new PlayerAdvancedBattingStatistics
+                {
+                    PlayerIdentifier = a.PlayerIdentifier,
+                    TeamIdentifier = a.TeamIdentifier,
+                    TeamName = a.TeamName,
+                    TeamYear = a.TeamYear,
+                    BattingAverage = a.BattingAverage,
+                    BattingAvgOfBallsInPlay = BaseballStatisticCalculation.GetBattingAvgOfBallsInPlay(a.AtBats, a.Hits, a.Homeruns, a.Strikeouts, a.SacrificeFlies),
+                    ExtraBaseHitPercentage = BaseballStatisticCalculation.GetRatio(a.Doubles + a.Triples + a.Homeruns, a.PlateAppearances),
+                    HomeRunPercentage = BaseballStatisticCalculation.GetRatio(a.Homeruns, a.PlateAppearances),
+                    InPlayPercentage = BaseballStatisticCalculation.GetRatio(a.AtBats - a.Strikeouts - a.Homeruns - a.SacrificeFlies, a.PlateAppearances),
+                    OnBasePercentage = BaseballStatisticCalculation.GetRatio(a.Hits + a.Walks + a.HitByPitch, a.AtBats + a.Walks + a.HitByPitch + a.SacrificeFlies),
+                    SluggingPercentage = BaseballStatisticCalculation.GetRatio(a.Hits + (2 * a.Doubles) + (3 * a.Triples) + (4 * a.Homeruns), a.AtBats),
+                    StrikeoutPercentage = BaseballStatisticCalculation.GetRatio(a.Strikeouts, a.PlateAppearances),
+                    WalkPercentage = BaseballStatisticCalculation.GetRatio(a.Walks, a.PlateAppearances)
+
+                }).ToList();
+            }
+
+            return players;
+        }
+
+        public async Task<Player> GetAsync(int id)
+        {
+            var player = await _player.GetAsync(id);
+
+            if (player != null)
+            {
+                //Calculate advanced batting metrics
+                player.AdvancedBattingStatistics = player.BattingStatistics.Select(a => new PlayerAdvancedBattingStatistics
+                {
+                    PlayerIdentifier = a.PlayerIdentifier,
+                    TeamIdentifier = a.TeamIdentifier,
+                    TeamName = a.TeamName,
+                    TeamYear = a.TeamYear,
+                    BattingAverage = a.BattingAverage,
+                    BattingAvgOfBallsInPlay = BaseballStatisticCalculation.GetBattingAvgOfBallsInPlay(a.AtBats, a.Hits, a.Homeruns, a.Strikeouts, a.SacrificeFlies),
+                    ExtraBaseHitPercentage = BaseballStatisticCalculation.GetRatio(a.Doubles + a.Triples + a.Homeruns, a.PlateAppearances),
+                    HomeRunPercentage = BaseballStatisticCalculation.GetRatio(a.Homeruns, a.PlateAppearances),
+                    InPlayPercentage = BaseballStatisticCalculation.GetRatio(a.AtBats - a.Strikeouts - a.Homeruns - a.SacrificeFlies, a.PlateAppearances),
+                    OnBasePercentage = BaseballStatisticCalculation.GetRatio(a.Hits + a.Walks + a.HitByPitch, a.AtBats + a.Walks + a.HitByPitch + a.SacrificeFlies),
+                    SluggingPercentage = BaseballStatisticCalculation.GetRatio(a.Hits + (2 * a.Doubles) + (3 * a.Triples) + (4 * a.Homeruns), a.AtBats),
+                    StrikeoutPercentage = BaseballStatisticCalculation.GetRatio(a.Strikeouts, a.PlateAppearances),
+                    WalkPercentage = BaseballStatisticCalculation.GetRatio(a.Walks, a.PlateAppearances)
+
+                }).ToList();
+            }
+            return player;
+        }
+
+        public async Task<ObjectModifyResult<int>> Delete(Player contract)
+        {
+            if (contract == null)
+                throw new ArgumentNullException(nameof(contract));
+
+            contract.IsActive = false;
+            contract.UpdatedAt = DateTime.UtcNow;
+
+            var result = await _player.SaveAsync(contract);
+            var modified = new ObjectModifyResult<int>();
+
+            if (result > 0)
+            {
+                modified.PrimaryIdentifier = result;
+                modified.RecordsModified = 1;
+            }
+
+            return modified;
         }
     }
 }
