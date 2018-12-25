@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Scout.Core.Contract
 {
+    [KnownType(typeof(PlayerBattingStatistics)), KnownType(typeof(PlayerFieldingStatistics)), KnownType(typeof(PlayerPitchingStatistics))]
     public abstract class PlayerStatistics
     {
         [DataMember]

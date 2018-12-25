@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Model.DB.Mongo", "Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Web.UI", "Web\Scout.Web.UI\Scout.Web.UI.csproj", "{278D40F6-023B-4774-8791-FA3D87882E73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Web.Api", "Web\Scout.Web.Api\Scout.Web.Api.csproj", "{E158AA55-4326-44C2-AF4D-7BF3426DA62C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{278D40F6-023B-4774-8791-FA3D87882E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{278D40F6-023B-4774-8791-FA3D87882E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{278D40F6-023B-4774-8791-FA3D87882E73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E158AA55-4326-44C2-AF4D-7BF3426DA62C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E158AA55-4326-44C2-AF4D-7BF3426DA62C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E158AA55-4326-44C2-AF4D-7BF3426DA62C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E158AA55-4326-44C2-AF4D-7BF3426DA62C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,5 +62,6 @@ Global
 		$3.CommitMessageStyle = $4
 		$4.Header = @Scout\n\n
 		$4.Indent = @\t
+		$4.LineAlign = 0
 	EndGlobalSection
 EndGlobal

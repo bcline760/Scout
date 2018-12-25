@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
-using Scout.Service.Contract;
-using Scout.Service;
+using Autofac;
+
 using Scout.Core;
-using Scout.Model.DB;
-using Scout.Model.DB.Repository;
-using Microsoft.EntityFrameworkCore;
-
 namespace Scout.Web.Api
 {
     public class Startup
@@ -28,33 +18,35 @@ namespace Scout.Web.Api
 
         public IConfiguration Configuration { get; }
 
+        public IContainer ApplicationContainer { get; private set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //What I want to do
-            //IContainer container = new IocContainer(services);
-            //ContainerLoader.LoadContainers(container);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            //What I don't want to do
-            services.AddDbContext<ScoutContext>(ctx => {
-                ctx.UseSqlServer(Configuration["ConnectionString"]);
-            });
-            services.AddScoped<IScoutContext, ScoutContext>();
-            services.AddScoped<IPlayerRepository, PlayerRepository>();
-            services.AddTransient<IPlayerService, PlayerService>();
-            
-            services.AddMvc();
+            var builder = new ContainerBuilder();
+            ContainerLoader.LoadContainers(builder);
+
+            ApplicationContainer = builder.Build();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
+            app.UseHttpsRedirection();
             app.UseMvc();
+
+            lifetime.ApplicationStopped.Register(ApplicationContainer.Dispose);
         }
     }
 }

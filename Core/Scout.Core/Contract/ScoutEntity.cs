@@ -6,7 +6,9 @@ namespace Scout.Core.Contract
     /// <summary>
     /// Base representation of data object
     /// </summary>
-    [DataContract]
+    [KnownType(typeof(Franchise)), KnownType(typeof(Player)), KnownType(typeof(Account))]
+    [KnownType(typeof(Team)), KnownType(typeof(ScoutingReport)), KnownType(typeof(Game))]
+    [KnownType(typeof(League))]
     public abstract class ScoutEntity
     {
         /// <summary>

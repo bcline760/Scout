@@ -14,13 +14,19 @@ namespace Scout.Web.Api
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .CaptureStartupErrors(true)
-                .UseStartup<Startup>()
-                .Build();
+                   .ConfigureAppConfiguration((hostingContext, config) =>
+                   {
+                       var env = hostingContext.HostingEnvironment;
+
+                       config.AddJsonFile("appsettings.json", optional: true)
+                           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+                       config.AddEnvironmentVariables();
+                   }).UseStartup<Startup>();
     }
 }

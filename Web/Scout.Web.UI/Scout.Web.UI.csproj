@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <TypeScriptBuildMode>true</TypeScriptBuildMode>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -43,6 +44,9 @@
     <Folder Include="ClientApp\src\app\home\home-detail\" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="ClientApp\src\app\player\player.component.css" />
+    <None Remove="ClientApp\src\app\player\player.component.html" />
+    <None Remove="ClientApp\src\app\player\player.component.ts" />
     <None Remove="ClientApp\src\assets\baseball.jpg" />
   </ItemGroup>
   <ItemGroup>

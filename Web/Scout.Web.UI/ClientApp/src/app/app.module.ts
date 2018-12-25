@@ -8,10 +8,12 @@ import {HomeModule} from './home/home.module';
 import { ScoutModule } from './scout/scout.module';
 import { PlayerModule } from './player/player.module';
 import { ErrorModule } from './error/error.module';
+import { PlayerComponent } from './player/player.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PlayerComponent,
   ],
   imports: [
     BrowserModule,

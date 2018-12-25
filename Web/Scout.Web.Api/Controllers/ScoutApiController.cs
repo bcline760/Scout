@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+
 using Scout.Core.Contract;
 using Scout.Core;
 
 namespace Scout.Web.Api.Controllers
 {
-    public abstract class BaseController : Controller
+    public abstract class ScoutApiController : Controller
     {
         /// <summary>
         /// Execute a service method
@@ -176,7 +177,7 @@ namespace Scout.Web.Api.Controllers
                         result = Ok(apiResponse);
                         break;
                     case ApiStatusCode.Created:
-                        result= CreatedAtAction(svcFunction, apiResponse);
+                        result = CreatedAtAction(svcFunction, apiResponse);
                         break;
                 }
 
