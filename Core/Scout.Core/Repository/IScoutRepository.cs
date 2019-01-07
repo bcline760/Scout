@@ -20,7 +20,7 @@ namespace Scout.Core.Repository
         /// </summary>
         /// <returns>A DB entity matching the GUID or null</returns>
         /// <param name="id">The GUID</param>
-        Task<TModel> GetAsync(int id);
+        Task<TModel> GetAsync(Guid id);
 
         /// <summary>
         /// Save a record to the database

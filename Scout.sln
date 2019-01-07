@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Model.DB.SQL", "Model\Scout.Model.DB\Scout.Model.DB.SQL.csproj", "{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Core", "Core\Scout.Core\Scout.Core.csproj", "{4A5F6A91-2D63-47C6-85AF-798161ECE988}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scout.Service", "Service\Scout.Service\Scout.Service.csproj", "{7F209AA1-B8BC-4DEE-B818-2A7CB16C2081}"
@@ -15,16 +13,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Web.UI", "Web\Scout.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Web.Api", "Web\Scout.Web.Api\Scout.Web.Api.csproj", "{E158AA55-4326-44C2-AF4D-7BF3426DA62C}"
 EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Scout.Model.DB.SQL", "Model\Scout.Model.DB\Scout.Model.DB.SQL.csproj", "{5B3727B0-E501-48EF-BB15-A16E799A9765}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scout.Setup", "Util\Scout.Setup\Scout.Setup.csproj", "{C5F5760E-8F30-425B-AC94-8927762D1B80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E71FDCD9-0B5C-4CBA-B17C-1E5E55DAFE3A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4A5F6A91-2D63-47C6-85AF-798161ECE988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A5F6A91-2D63-47C6-85AF-798161ECE988}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A5F6A91-2D63-47C6-85AF-798161ECE988}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +43,14 @@ Global
 		{E158AA55-4326-44C2-AF4D-7BF3426DA62C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E158AA55-4326-44C2-AF4D-7BF3426DA62C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E158AA55-4326-44C2-AF4D-7BF3426DA62C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B3727B0-E501-48EF-BB15-A16E799A9765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B3727B0-E501-48EF-BB15-A16E799A9765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B3727B0-E501-48EF-BB15-A16E799A9765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B3727B0-E501-48EF-BB15-A16E799A9765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5F5760E-8F30-425B-AC94-8927762D1B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5F5760E-8F30-425B-AC94-8927762D1B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5F5760E-8F30-425B-AC94-8927762D1B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5F5760E-8F30-425B-AC94-8927762D1B80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

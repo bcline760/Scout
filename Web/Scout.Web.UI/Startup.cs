@@ -5,18 +5,26 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using Scout.Core;
+using Scout.Web.Api;
 
 using Autofac;
+using Scout.Core.Configuration;
 
 namespace Scout.Web.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IHostingEnvironment _env = null;
+        private ILoggerFactory _loggerFactory = null;
+
+        public Startup(IConfiguration configuration, ILoggerFactory factory, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
+            _loggerFactory = factory;
         }
 
         public IConfiguration Configuration { get; }
@@ -26,13 +34,20 @@ namespace Scout.Web.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc().AddApplicationPart(typeof(ScoutApiController).Assembly);
+            services.AddAuthentication().AddJwtBearer();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterInstance<IConfiguration>(Configuration);
-            //ContainerLoader.LoadContainers(builder);
+            var config = new ScoutConfiguration
+            {
+                MongoConnectionString = Configuration.GetConnectionString("MongoDB"),
+                MongoDatabaseName = Configuration["DatabaseName"]
+            };
+
+            builder.RegisterInstance<IScoutConfiguration>(config);
+            ContainerLoader.LoadContainers(builder);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,9 +70,15 @@ namespace Scout.Web.UI
                     await next();
                 }
             });
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute("default", "{controller}/{action=Index}/{id?}");
+            //    routes.MapRoute("apiRoute", "api/{controller}/{action}/{id?}");
+            //});
         }
     }
 }

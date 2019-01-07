@@ -10,16 +10,13 @@ using Scout.Core.Bus;
 
 namespace Scout.Service
 {
-    public class PlayerService : IPlayerService
+    public class PlayerService : ScoutService<Player>, IScoutService<Player>
     {
         private IPlayerRepository _player = null;
-        private ITeamRepository _teamRepo = null;
 
-        public PlayerService(IPlayerRepository player,
-            ITeamRepository teamRepository)
+        public PlayerService(IPlayerRepository player) : base(player)
         {
             _player = player;
-            _teamRepo = teamRepository;
         }
 
         public async Task<List<Player>> FindPlayers(PlayerSearchRequest request)
@@ -64,24 +61,7 @@ namespace Scout.Service
             return players;
         }
 
-        public async Task<ObjectModifyResult<int>> SaveAsync(Player contract)
-        {
-            if (contract == null)
-                throw new ArgumentNullException(nameof(contract));
-
-            int playerId = await _player.SaveAsync(contract);
-            var modified = new ObjectModifyResult<int>();
-
-            if (playerId > 0)
-            {
-                modified.PrimaryIdentifier = playerId;
-                modified.RecordsModified = 1;
-            }
-
-            return modified;
-        }
-
-        public async Task<IEnumerable<Player>> GetAllAsync()
+        public override async Task<IEnumerable<Player>> GetAllAsync()
         {
             var players = await _player.LoadAllAsync();
             foreach (var player in players)
@@ -109,7 +89,7 @@ namespace Scout.Service
             return players;
         }
 
-        public async Task<Player> GetAsync(int id)
+        public override async Task<Player> GetAsync(Guid id)
         {
             var player = await _player.GetAsync(id);
 
@@ -135,26 +115,6 @@ namespace Scout.Service
                 }).ToList();
             }
             return player;
-        }
-
-        public async Task<ObjectModifyResult<int>> Delete(Player contract)
-        {
-            if (contract == null)
-                throw new ArgumentNullException(nameof(contract));
-
-            contract.IsActive = false;
-            contract.UpdatedAt = DateTime.UtcNow;
-
-            var result = await _player.SaveAsync(contract);
-            var modified = new ObjectModifyResult<int>();
-
-            if (result > 0)
-            {
-                modified.PrimaryIdentifier = result;
-                modified.RecordsModified = 1;
-            }
-
-            return modified;
         }
     }
 }

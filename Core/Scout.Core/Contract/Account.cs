@@ -19,12 +19,41 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+
 namespace Scout.Core.Contract
 {
+    [DataContract]
     public class Account : ScoutEntity
     {
         public Account()
         {
         }
+
+        [DataMember]
+        public string EmailAddress { get; set; }
+        [DataMember]
+        public string FirstName { get; set; }
+        [DataMember]
+        public string LastName { get; set; }
+        [DataMember]
+        public string City { get; set; }
+        [DataMember]
+        public string State { get; set; }
+        [DataMember]
+        public string StateProvince { get; set; }
+        [DataMember]
+        public string Country { get; set; }
+        [DataMember]
+        public List<Guid> TeamsScout { get; set; }
+        [DataMember]
+        public List<Guid> ScoutingReports { get; set; }
+        [DataMember]
+        public string Password { get; set; }
+        [DataMember]
+        public string SsoToken { get; set; }
+        [DataMember]
+        public SingleSignOnProvider SsoProvider { get; set; }
     }
 }

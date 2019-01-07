@@ -39,6 +39,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Scout.Core\Scout.Core.csproj" />
+    <ProjectReference Include="..\Scout.Web.Api\Scout.Web.Api.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ClientApp\src\app\home\home-detail\" />
