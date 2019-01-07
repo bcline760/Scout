@@ -19,12 +19,51 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace Scout.Model.DB.Mongo
 {
-    public class TeamModel
+    public class TeamModel : ScoutModel
     {
-        public TeamModel()
-        {
-        }
+        [BsonElement]
+        public int FranchiseId { get; set; }
+        [BsonElement]
+        public int LeagueId { get; set; }
+        [BsonElement]
+        public string DivisionCode { get; set; }
+        [BsonElement]
+        public string TeamIdentifier { get; set; }
+        [BsonElement]
+        public short TeamYear { get; set; }
+        [BsonElement]
+        public string TeamName { get; set; }
+        [BsonElement]
+        public byte Wins { get; set; }
+        [BsonElement]
+        public byte Losses { get; set; }
+        [BsonElement]
+        public bool WonDivision { get; set; }
+        [BsonElement]
+        public bool WonWildCard { get; set; }
+        [BsonElement]
+        public bool WonLeague { get; set; }
+        [BsonElement]
+        public bool WonWorldSeries { get; set; }
+        [BsonElement]
+        public short GamesPlayed { get; set; }
+        [BsonElement]
+        public short GamesPlayedAtHome { get; set; }
+        [BsonElement]
+        public string ParkName { get; set; }
+        [BsonElement]
+        public int TotalAttendance { get; set; }
+        [BsonElement]
+        public byte ParkFactorBatting { get; set; }
+        [BsonElement]
+        public byte ParkFactorPitching { get; set; }
+        [BsonElement]
+        public string TeamRetrosheetId { get; set; }
+        [BsonElement]
+        public string TeamBaseballRefId { get; set; }
     }
 }

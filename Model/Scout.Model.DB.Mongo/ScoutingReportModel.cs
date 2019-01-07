@@ -21,7 +21,7 @@
 using System;
 namespace Scout.Model.DB.Mongo
 {
-    public class ScoutingReportModel
+    public class ScoutingReportModel : ScoutModel
     {
         public ScoutingReportModel()
         {

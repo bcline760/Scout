@@ -32,7 +32,7 @@ namespace Scout.Model.DB.Mongo
                 (IMemberConfigurationExpression<Player, PlayerModel, object> obj) => obj.MapFrom(m => $"{m.FirstName} {m.LastName}"));
 
             CreateMap<TeamModel, Team>().ReverseMap();
-            CreateMap<ScoutingReportModel, ScoutingReport>().ReverseMap();
+            //CreateMap<ScoutingReportModel, ScoutingReport>().ReverseMap();
             CreateMap<AccountModel, Account>().ReverseMap();
         }
     }

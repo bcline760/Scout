@@ -50,7 +50,7 @@ namespace Scout.Model.DB.Mongo
         {
             public string Name => nameof(SeparateWordsNamingConvetion);
             private static readonly Regex s_seperateWordRegex =
-                new Regex(@"(?&lt;=[A-Z])(?=[A-Z][a-z]) | (?&lt;=[^A-Z])(?=[A-Z]) | (?&lt;=[A-Za-z])(?=[^A-Za-z])", RegexOptions.IgnorePatternWhitespace);
+                new Regex(@"(?<=[A-Z])(?=[A-Z][a-z]) | (?<=[^A-Z])(?=[A-Z]) | (?<=[A-Za-z])(?=[^A-Za-z])", RegexOptions.IgnorePatternWhitespace);
 
             public void Apply(BsonMemberMap memberMap)
             {
