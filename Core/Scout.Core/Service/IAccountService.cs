@@ -30,14 +30,21 @@ namespace Scout.Core.Service
         /// </summary>
         /// <returns>The account matching the credentials provided.</returns>
         /// <param name="auth">Auth.</param>
-        Task<Account> AuthenticateAsync(AccountAuthenticate auth);
+        Task<AuthenticationResult> AuthenticateAsync(AccountAuthenticate auth);
 
         /// <summary>
         /// Registers an account
         /// </summary>
         /// <returns>An account object recently registered</returns>
         /// <param name="register">The account to register</param>
-        Task<Account> RegisterAsync(AccountRegister register);
+        Task<AuthenticationResult> RegisterAsync(AccountRegister register);
+
+        /// <summary>
+        /// Loads an account by the e-mail. Only one e-mail can be registered
+        /// </summary>
+        /// <returns>The by email.</returns>
+        /// <param name="email">Email.</param>
+        Task<Account> LoadByEmail(string email);
     }
 }
 

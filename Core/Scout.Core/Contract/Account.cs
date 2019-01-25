@@ -55,5 +55,7 @@ namespace Scout.Core.Contract
         public string SsoToken { get; set; }
         [DataMember]
         public SingleSignOnProvider SsoProvider { get; set; }
+        [DataMember]
+        public ScoutAccountRole Role { get; set; }
     }
 }

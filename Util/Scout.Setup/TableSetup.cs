@@ -54,8 +54,11 @@ namespace Scout.Setup
 
             try
             {
-                await _db.CreateCollectionAsync(collectionName, options);
                 var collection = _db.GetCollection<AccountModel>(collectionName);
+                if (collection != null)
+                    return true;
+
+                await _db.CreateCollectionAsync(collectionName, options);
 
                 var uniqueOption = new CreateIndexOptions { Unique = true };
                 var emailField = new StringFieldDefinition<AccountModel>("EmailAddress");
@@ -76,6 +79,128 @@ namespace Scout.Setup
                 var result = await collection.Indexes.CreateManyAsync(indicies);
 
                 return true;
+            }
+            catch (MongoException ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> CreatePlayerCollection()
+        {
+            string collectionName = GetCollectionName<PlayerModel>();
+            var options = new CreateCollectionOptions
+            {
+                UsePowerOf2Sizes = true
+            };
+
+            try
+            {
+                var collection = _db.GetCollection<PlayerModel>(collectionName);
+                if (collection != null)
+                    return true;
+
+                await _db.CreateCollectionAsync(collectionName, options);
+
+                var uniqueOption = new CreateIndexOptions { Unique = true };
+                var searchName = new StringFieldDefinition<PlayerModel>("PlayerSearchName");
+                var playerId = new StringFieldDefinition<PlayerModel>("PlayerIdentifier");
+                var playerRetro = new StringFieldDefinition<PlayerModel>("RetrosheetId");
+
+                var searchNameIx = new IndexKeysDefinitionBuilder<PlayerModel>().Text(searchName);
+                var playerIdIx = new IndexKeysDefinitionBuilder<PlayerModel>().Ascending(playerId);
+                var playerRetroIx = new IndexKeysDefinitionBuilder<PlayerModel>().Ascending(playerRetro);
+
+                var indicies = new List<CreateIndexModel<PlayerModel>>
+                {
+                    new CreateIndexModel<PlayerModel>(searchNameIx),
+                    new CreateIndexModel<PlayerModel>(playerIdIx),
+                    new CreateIndexModel<PlayerModel>(playerRetroIx)
+                };
+
+                var result = await collection.Indexes.CreateManyAsync(indicies);
+
+                return result.Any();
+            }
+            catch (MongoException mex)
+            {
+                Console.Error.WriteLine(mex.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> CreateScoutingReportCollection()
+        {
+            string collectionName = GetCollectionName<ScoutingReportModel>();
+            var options = new CreateCollectionOptions
+            {
+                UsePowerOf2Sizes = true
+            };
+
+            try
+            {
+                var collection = _db.GetCollection<ScoutingReportModel>(collectionName);
+                if (collection != null)
+                    return true;
+
+                await _db.CreateCollectionAsync(collectionName, options);
+                var createOptions = new CreateIndexOptions
+                {
+                    Unique = true
+                };
+
+                var playerIdFieldDef = new StringFieldDefinition<ScoutingReportModel>("PlayerIdentifier");
+                var scoutDateFieldDef = new StringFieldDefinition<ScoutingReportModel>("ScoutingDate");
+
+                var playerIdIx = new IndexKeysDefinitionBuilder<ScoutingReportModel>().Ascending(playerIdFieldDef);
+                var scoutDateIx = new IndexKeysDefinitionBuilder<ScoutingReportModel>().Ascending(scoutDateFieldDef);
+                var indicies = new List<CreateIndexModel<ScoutingReportModel>>
+                {
+                    new CreateIndexModel<ScoutingReportModel>(playerIdIx),
+                    new CreateIndexModel<ScoutingReportModel>(scoutDateIx)
+                };
+                var result = await collection.Indexes.CreateManyAsync(indicies);
+
+                return result.Any();
+            }
+            catch (MongoException ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> CreateTeamCollection()
+        {
+            var collectionName = GetCollectionName<TeamModel>();
+            var options = new CreateCollectionOptions { UsePowerOf2Sizes = true };
+
+            try
+            {
+                var collection = _db.GetCollection<TeamModel>(collectionName);
+                if (collection != null)
+                    return true;
+
+                await _db.CreateCollectionAsync(collectionName, options);
+
+                var teamIdFieldDef = new StringFieldDefinition<TeamModel>("TeamIdentifier");
+                var retroIdFieldDef = new StringFieldDefinition<TeamModel>("TeamRetrosheetId");
+                var bbIdFieldDef = new StringFieldDefinition<TeamModel>("TeamBaseballRefId");
+
+                var teamIdIx = new IndexKeysDefinitionBuilder<TeamModel>().Ascending(teamIdFieldDef);
+                var retroIdIx = new IndexKeysDefinitionBuilder<TeamModel>().Ascending(retroIdFieldDef);
+                var bbIdIx = new IndexKeysDefinitionBuilder<TeamModel>().Ascending(bbIdFieldDef);
+
+                var indicies = new List<CreateIndexModel<TeamModel>>
+                {
+                    new CreateIndexModel<TeamModel>(teamIdIx),
+                    new CreateIndexModel<TeamModel>(retroIdIx),
+                    new CreateIndexModel<TeamModel>(bbIdIx)
+                };
+                var result = await collection.Indexes.CreateManyAsync(indicies);
+
+                return result.Any();
             }
             catch (MongoException ex)
             {

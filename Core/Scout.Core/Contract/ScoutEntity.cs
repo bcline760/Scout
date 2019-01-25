@@ -6,9 +6,8 @@ namespace Scout.Core.Contract
     /// <summary>
     /// Base representation of data object
     /// </summary>
-    [KnownType(typeof(Franchise)), KnownType(typeof(Player)), KnownType(typeof(Account))]
+    [KnownType(typeof(Player)), KnownType(typeof(Account))]
     [KnownType(typeof(Team)), KnownType(typeof(ScoutingReport)), KnownType(typeof(Game))]
-    [KnownType(typeof(League))]
     public abstract class ScoutEntity
     {
         /// <summary>
@@ -16,7 +15,7 @@ namespace Scout.Core.Contract
         /// </summary>
         /// <value>The identifier.</value>
         [DataMember]
-        public int Id { get; set; }
+        public Guid ID { get; set; }
         /// <summary>
         /// Get or set when the object was created in the data store
         /// </summary>

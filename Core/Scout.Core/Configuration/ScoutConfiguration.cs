@@ -11,5 +11,7 @@ namespace Scout.Core.Configuration
         public string MongoConnectionString { get; set; }
 
         public string MongoDatabaseName { get; set; }
+
+        public string KeyStoreName { get; set; }
     }
 }

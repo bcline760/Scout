@@ -4,5 +4,6 @@
     {
         string MongoConnectionString { get; set; }
         string MongoDatabaseName { get; set; }
+        string KeyStoreName { get; set; }
     }
 }

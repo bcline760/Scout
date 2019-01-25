@@ -50,5 +50,7 @@ namespace Scout.Model.DB.Mongo
         public string SsoToken { get; set; }
         [BsonElement]
         public int SsoProvider { get; set; }
+        [BsonElement]
+        public int Role { get; set; }
     }
 }

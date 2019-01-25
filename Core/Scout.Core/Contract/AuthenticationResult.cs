@@ -1,5 +1,5 @@
 ﻿//
-//  FranchiseModel.cs
+//  AuthenticationResult.cs
 //
 //  Author:
 //       bcline <bcline760@yahoo.com>
@@ -19,12 +19,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
-namespace Scout.Model.DB.Mongo
+namespace Scout.Core.Contract
 {
-    public class FranchiseModel
+    public class AuthenticationResult
     {
-        public FranchiseModel()
-        {
-        }
+        public string Token { get; set; }
+
+        public string AuthenticationMessage { get; set; }
     }
 }

@@ -19,12 +19,33 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace Scout.Model.DB.Mongo
 {
     public class ScoutingReportModel : ScoutModel
     {
-        public ScoutingReportModel()
-        {
-        }
+        [BsonElement]
+        public string PlayerIdentifier { get; set; }
+        [BsonElement]
+        public DateTime ScoutingDate { get; set; }
+        [BsonElement]
+        public short GamesSeen { get; set; }
+        [BsonElement]
+        public short InningsSeen { get; set; }
+        [BsonElement]
+        public string CurrentLevel { get; set; }
+        [BsonElement]
+        public string NextTearLevel { get; set; }
+        [BsonElement]
+        public string TopLevel { get; set; }
+        [BsonElement]
+        public string PlayerOfInterest { get; set; }
+        [BsonElement]
+        public byte PresentOverallEvaluationGrade { get; set; }
+        [BsonElement]
+        public byte FutureOverallEvaluationGrade { get; set; }
+        [BsonElement]
+        public string ScoutingSummary { get; set; }
     }
 }

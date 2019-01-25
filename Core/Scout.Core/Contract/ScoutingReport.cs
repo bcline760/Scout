@@ -6,10 +6,8 @@ namespace Scout.Core.Contract
     [DataContract]
     public class ScoutingReport : ScoutEntity
     {
-        public ScoutingReport()
-        {
-        }
-
+        [DataMember]
+        public string PlayerIdentifier { get; set; }
         [DataMember]
         public DateTime ScoutingDate { get; set; }
         [DataMember]
@@ -36,7 +34,5 @@ namespace Scout.Core.Contract
 
         [DataMember]
         public string ScoutingSummary { get; set; }
-
-
     }
 }
