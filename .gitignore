@@ -260,3 +260,7 @@ paket-files/
 __pycache__/
 *.pyc
 /Web/Scout.Web.UI/wwwroot
+
+Terraform/**/terraform.tfstate
+Terraform/**/terraform.tfstate.*
+Terraform/**/.terraform
