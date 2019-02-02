@@ -12,6 +12,7 @@ using Scout.Web.Api;
 
 using Autofac;
 using Scout.Core.Configuration;
+using Scout.Core.Security;
 
 namespace Scout.Web.UI
 {
@@ -40,13 +41,11 @@ namespace Scout.Web.UI
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            var config = new ScoutConfiguration
-            {
-                MongoConnectionString = Configuration.GetConnectionString("MongoDB"),
-                MongoDatabaseName = Configuration["DatabaseName"]
-            };
+            var config = Configuration.Get<ScoutConfiguration>();
+            config.MongoConnectionString = Configuration.GetConnectionString("MongoDB");
 
             builder.RegisterInstance<IScoutConfiguration>(config);
+            builder.RegisterInstance<IScoutEncryption>(new ScoutEncryption(config)).SingleInstance();
             ContainerLoader.LoadContainers(builder);
         }
 
@@ -74,11 +73,6 @@ namespace Scout.Web.UI
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute("default", "{controller}/{action=Index}/{id?}");
-            //    routes.MapRoute("apiRoute", "api/{controller}/{action}/{id?}");
-            //});
         }
     }
 }

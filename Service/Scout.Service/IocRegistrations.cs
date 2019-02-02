@@ -10,6 +10,7 @@ namespace Scout.Service
         public void Register(ContainerBuilder container)
         {
             container.RegisterType<PlayerService>().As<IPlayerService>();
+            container.RegisterType<AccountService>().As<IAccountService>();
         }
     }
 }

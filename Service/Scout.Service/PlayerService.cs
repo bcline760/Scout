@@ -10,7 +10,7 @@ using Scout.Core.Bus;
 
 namespace Scout.Service
 {
-    public class PlayerService : ScoutService<Player>, IScoutService<Player>
+    public class PlayerService : ScoutService<Player>, IPlayerService
     {
         private IPlayerRepository _player = null;
 

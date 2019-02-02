@@ -24,12 +24,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 using Scout.Core;
 using Scout.Core.Contract;
 using Scout.Core.Repository;
 using Scout.Core.Service;
 using Scout.Core.Security;
+using Scout.Core.Configuration;
 
 namespace Scout.Service
 {
@@ -37,11 +39,13 @@ namespace Scout.Service
     {
         private IAccountRepository _repo;
         private IScoutEncryption _enc = null;
+        private IScoutConfiguration _config;
 
-        public AccountService(IAccountRepository repo, IScoutEncryption enc) : base(repo)
+        public AccountService(IAccountRepository repo, IScoutEncryption enc, IScoutConfiguration config) : base(repo)
         {
             _repo = repo;
             _enc = enc;
+            _config = config;
         }
 
         public async Task<AuthenticationResult> AuthenticateAsync(AccountAuthenticate auth)
@@ -93,7 +97,7 @@ namespace Scout.Service
             var acct = await _repo.LoadByEmailAsync(register.EmailAddress);
             if (acct != null)
             {
-                throw new RegistrationException(acct.ID.ToString());
+                throw new RegistrationException(acct.Id.ToString());
             }
 
             var cuenta = new Account
@@ -102,17 +106,25 @@ namespace Scout.Service
                 Password = register.Password,
                 SsoToken = register.SsoToken,
                 SsoProvider = register.SsoProvider,
-                Role = ScoutAccountRole.Basic
+                Role = ScoutAccountRole.Basic,
+                FirstName = register.FirstName,
+                LastName = register.LastName
             };
 
-            int registrosAgregados = await _repo.SaveAsync(cuenta);
+            Guid guid = await _repo.SaveAsync(cuenta);
 
             var result = new AuthenticationResult();
-            if (registrosAgregados > 0)
+            if (guid != Guid.Empty)
             {
                 cuenta = await _repo.LoadByEmailAsync(register.EmailAddress);
 
-                GenerateJwt(cuenta);
+                string token = GenerateJwt(cuenta);
+                result.Token = token;
+                result.AuthenticationMessage = "Success";
+            }
+            else
+            {
+                result.AuthenticationMessage = "Account failed to register";
             }
             return result;
         }
@@ -164,8 +176,38 @@ namespace Scout.Service
 
         private string GenerateJwt(Account cuenta)
         {
-            X509Certificate2 certificate = (X509Certificate2)X509Certificate.CreateFromCertFile("");
+            X509Certificate2 certificate = null;
 
+            //Check for a certificate file, if none, use the certificate store
+            if (string.IsNullOrEmpty(_config.Certificate.CertificateFile))
+            {
+                X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
+                store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
+                foreach (var cert in store.Certificates)
+                {
+                    if (cert.Thumbprint == _config.Certificate.Thumbprint)
+                    {
+                        certificate = cert;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                string httpPattern = "^https?://";
+                if (Regex.IsMatch(_config.Certificate.CertificateFile, httpPattern))
+                {
+
+                }
+                else
+                {
+                    certificate = new X509Certificate2 (
+                        X509Certificate.CreateFromCertFile(
+                            _config.Certificate.CertificateFile));
+                }
+            }
+
+            if (certificate == null) throw new InvalidOperationException($"Certificate {_config.Certificate.CommonName} with thumbprint {_config.Certificate.Thumbprint} was not found. Please install certificate");
             var claimsList = new List<Claim>
                 {
                     new Claim(ClaimTypes.AuthenticationMethod, cuenta.SsoProvider.ToString()),

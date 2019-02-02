@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
-
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 
@@ -35,8 +35,9 @@ namespace Scout.Model.DB.Mongo
         /// The primary identifier of the data object
         /// </summary>
         /// <value>The identifier.</value>
-        [BsonId(IdGenerator = typeof(GuidGenerator))]
-        public Guid ID { get; set; }
+        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+        [BsonIgnoreIfDefault]
+        public string Id { get; set; }
         /// <summary>
         /// Get or set when the object was created in the data store
         /// </summary>

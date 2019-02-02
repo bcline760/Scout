@@ -7,10 +7,12 @@ using Scout.Core;
 using Scout.Core.Configuration;
 using Scout.Core.Service;
 using Scout.Core.Contract;
+using Scout.Core.Security;
 
 using Autofac;
 using MongoDB.Driver;
-
+using AutoMapper;
+using Scout.Model.DB.Mongo;
 
 namespace Scout.Setup
 {
@@ -31,6 +33,10 @@ namespace Scout.Setup
             var builder = SetupIoc();
 
             IContainer container = builder.Build(Autofac.Builder.ContainerBuildOptions.IgnoreStartableComponents);
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile(new DatabaseModelMap());
+            });
             Console.WriteLine("Done");
 
             var mongo = container.Resolve<IMongoDatabase>();
@@ -62,17 +68,15 @@ namespace Scout.Setup
                 Password = "",
                 SsoProvider = SingleSignOnProvider.None
             };
-            Task.Run(async () => {
+            Task.Run(async () =>
+            {
                 var cuenta = await svc.LoadByEmail(masterAcct.EmailAddress);
-                if (cuenta != null)
+                if (cuenta == null)
                 {
                     var authentication = await svc.RegisterAsync(masterAcct);
-                    if (authentication != null)
-                        Console.WriteLine("Main account created!");
-                    else
-                        Console.WriteLine("Account failed to create");
+                    Console.WriteLine(authentication.AuthenticationMessage);
                 }
-            });
+            }).Wait();
             Console.WriteLine("All done.");
             Console.ReadKey();
         }
@@ -80,13 +84,13 @@ namespace Scout.Setup
         static ContainerBuilder SetupIoc()
         {
             var builder = new ContainerBuilder();
-            var config = new ScoutConfiguration
-            {
-                MongoConnectionString = Configuration.GetConnectionString("MongoDB"),
-                MongoDatabaseName = Configuration["DatabaseName"]
-            };
 
+            var config = Configuration.Get<ScoutConfiguration>();
+            config.MongoConnectionString = Configuration.GetConnectionString("MongoDB");
+
+            var enc = new ScoutEncryption(config);
             builder.RegisterInstance<IScoutConfiguration>(config);
+            builder.RegisterInstance<IScoutEncryption>(enc);
             ContainerLoader.LoadContainers(builder);
 
             return builder;

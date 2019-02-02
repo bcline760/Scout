@@ -66,7 +66,7 @@ namespace Scout.Model.DB.Mongo.Repository
             return allPlayers.Select(Mapper.Map<PlayerModel, Player>).ToList();
         }
 
-        public async Task<int> SaveAsync(Player model)
+        public async Task<Guid> SaveAsync(Player model)
         {
             return await SaveAsync(Mapper.Map<Player, PlayerModel>(model));
         }

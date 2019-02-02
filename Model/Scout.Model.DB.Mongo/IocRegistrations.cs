@@ -1,14 +1,18 @@
-﻿using Scout.Core.Configuration;
+﻿using System.Linq;
+using System;
+using System.Text.RegularExpressions;
+
+using Scout.Core.Configuration;
 using Scout.Core;
+using Scout.Model.DB.Mongo.Repository;
+using Scout.Core.Repository;
 
 using Autofac;
 using MongoDB.Driver;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization;
-using System.Text.RegularExpressions;
-using Scout.Model.DB.Mongo.Repository;
-using Scout.Core.Repository;
-using System.Linq;
+using MongoDB.Bson.Serialization.IdGenerators;
+using AutoMapper;
 
 namespace Scout.Model.DB.Mongo
 {
@@ -22,6 +26,7 @@ namespace Scout.Model.DB.Mongo
                 var settings = MongoClientSettings.FromUrl(new MongoUrl(config.MongoConnectionString));
                 var client = new MongoClient(settings);
 
+                BsonSerializer.RegisterIdGenerator(typeof(Guid), GuidGenerator.Instance);
                 ConventionPack pack = new ConventionPack
                 {
                     new LowerCaseNamingConvention(),
@@ -29,11 +34,17 @@ namespace Scout.Model.DB.Mongo
                     new SeparateWordsNamingConvetion()
                 };
                 ConventionRegistry.Register("standard", pack, type => true);
-                return client.GetDatabase(config.MongoDatabaseName);
+                return client.GetDatabase(config.DatabaseName);
 
             }).As<IMongoDatabase>().SingleInstance();
 
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile(new DatabaseModelMap());
+            });
+
             container.RegisterType<PlayerRepository>().As<IPlayerRepository>();
+            container.RegisterType<AccountRepository>().As<IAccountRepository>();
         }
 
         private class LowerCaseNamingConvention : IMemberMapConvention

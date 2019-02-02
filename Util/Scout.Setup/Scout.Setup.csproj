@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Scout.Core\Scout.Core.csproj" />
     <ProjectReference Include="..\..\Model\Scout.Model.DB.Mongo\Scout.Model.DB.Mongo.csproj" />
+    <ProjectReference Include="..\..\Service\Scout.Service\Scout.Service.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />

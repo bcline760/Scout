@@ -185,7 +185,7 @@ namespace Scout.Core.Security
             }
             else if (signingCertificate != null)
             {
-                signingCredentials = new X509SigningCredentials(signingCertificate, SecurityAlgorithms.HmacSha256Signature);
+                signingCredentials = new X509SigningCredentials(signingCertificate);
             }
             else if (key != null && signingCertificate != null)
                 throw new ArgumentException("Cannot pass both a certificate and key");

@@ -1,5 +1,5 @@
 ﻿//
-//  DatabaseModelMap.cs
+//  CertificateConfiguration.cs
 //
 //  Author:
 //       bcline <bcline760@yahoo.com>
@@ -19,21 +19,26 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
-
-using AutoMapper;
-using Scout.Core.Contract;
-namespace Scout.Model.DB.Mongo
+namespace Scout.Core.Configuration
 {
-    public class DatabaseModelMap : Profile
+    public class CertificateConfiguration
     {
-        public DatabaseModelMap()
-        {
-            CreateMap<PlayerModel, Player>().ReverseMap().ForMember(m => m.PlayerSearchName,
-                (IMemberConfigurationExpression<Player, PlayerModel, object> obj) => obj.MapFrom(m => $"{m.FirstName} {m.LastName}"));
+        /// <summary>
+        /// Get or set the certificate thumbprint
+        /// </summary>
+        /// <value>The thumbprint.</value>
+        public string Thumbprint { get; set; }
 
-            CreateMap<TeamModel, Team>().ReverseMap();
-            //CreateMap<ScoutingReportModel, ScoutingReport>().ReverseMap();
-            CreateMap<AccountModel, Account>().ReverseMap();
-        }
+        /// <summary>
+        /// Get or set the common name of the certificate
+        /// </summary>
+        /// <value>The name of the common.</value>
+        public string CommonName { get; set; }
+
+        /// <summary>
+        /// Get or set the location of the file. If this is a Key Vault certificate, it will be downloaded.
+        /// </summary>
+        /// <value>The certificate file.</value>
+        public string CertificateFile { get; set; }
     }
 }

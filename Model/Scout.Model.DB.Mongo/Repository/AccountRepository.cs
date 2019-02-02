@@ -45,7 +45,7 @@ namespace Scout.Model.DB.Mongo.Repository
             return allAccounts.Select(Mapper.Map<AccountModel, Account>).ToList();
         }
 
-        public async Task<int> SaveAsync(Account model)
+        public async Task<Guid> SaveAsync(Account model)
         {
             var entity = Mapper.Map<Account, AccountModel>(model);
             return await SaveAsync(entity);

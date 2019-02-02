@@ -27,6 +27,6 @@ namespace Scout.Core.Repository
         /// </summary>
         /// <returns>The number of records modified.</returns>
         /// <param name="model">The db object to be saved to the database</param>
-        Task<int> SaveAsync(TModel model);
+        Task<Guid> SaveAsync(TModel model);
     }
 }

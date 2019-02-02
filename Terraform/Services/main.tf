@@ -1,11 +1,27 @@
 provider "azurerm" {
-  version = "=1.20.0"
 }
 
 data "azurerm_client_config" "scout_config" {}
 
 data "azurerm_resource_group" "scout-rg" {
   name = "scout"
+}
+
+data "azurerm_virtual_network" "vnet" {
+  name                = "scout-vnet"
+  resource_group_name = "${data.azurerm_resource_group.scout-rg.name}"
+}
+
+data "azurerm_subnet" "subnet-db" {
+  name                 = "scout-subnet-cosmosdb"
+  resource_group_name  = "${data.azurerm_resource_group.scout-rg.name}"
+  virtual_network_name = "${data.azurerm_virtual_network.vnet.name}"
+}
+
+data "azurerm_subnet" "subnet-keyvault" {
+  resource_group_name  = "${data.azurerm_resource_group.scout-rg.name}"
+  name                 = "scout-subnet-keyvault"
+  virtual_network_name = "${data.azurerm_virtual_network.vnet.name}"
 }
 
 resource "azurerm_cosmosdb_account" "db" {
@@ -30,7 +46,7 @@ resource "azurerm_cosmosdb_account" "db" {
   }
 
   virtual_network_rule = {
-    id = "${azurerm_subnet.scout-subnet-cosmosdb.id}"
+    id = "${data.azurerm_subnet.subnet-db.id}"
   }
 }
 
@@ -56,7 +72,7 @@ resource "azurerm_app_service" "scout-appservice" {
   site_config {
     dotnet_framework_version = "v4.0"
     scm_type                 = "LocalGit"
-    virtual_network_name     = "${azurerm_virtual_network.scout-vnet.name}"
+    virtual_network_name     = "${data.azurerm_virtual_network.vnet.name}"
   }
 
   identity {
@@ -67,10 +83,13 @@ resource "azurerm_app_service" "scout-appservice" {
 resource "azurerm_key_vault" "scout_keyvault" {
   name                = "scout-keyvault"
   resource_group_name = "${data.azurerm_resource_group.scout-rg.name}"
+  location            = "${data.azurerm_resource_group.scout-rg.location}"
 
   sku {
-    name = "Premium"
+    name = "premium"
   }
+
+  tenant_id = "${data.azurerm_client_config.scout_config.tenant_id}"
 
   access_policy {
     tenant_id = "${data.azurerm_client_config.scout_config.tenant_id}"
@@ -142,9 +161,9 @@ resource "azurerm_key_vault" "scout_keyvault" {
 
   network_acls {
     bypass                     = "AzureServices"
-    virtual_network_subnet_ids = ["${azurerm_subnet.scout-subnet-keyvault.id}"]
+    virtual_network_subnet_ids = ["${data.azurerm_subnet.subnet-keyvault.id}"]
     default_action             = "Deny"
-    ip_rules                   = ["70.166.83.0/24"]
+    ip_rules                   = ["70.166.83.0/24", "68.107.105.0/24"]
   }
 }
 
@@ -174,6 +193,10 @@ resource "azurerm_key_vault_certificate" "signing_cert" {
       }
     }
 
+    secret_properties {
+      content_type = "application/x-pkcs12"
+    }
+
     x509_certificate_properties {
       # Server Authentication = 1.3.6.1.5.5.7.3.1
       # Client Authentication = 1.3.6.1.5.5.7.3.2
@@ -189,7 +212,7 @@ resource "azurerm_key_vault_certificate" "signing_cert" {
       ]
 
       subject_alternative_names {
-        dns_names = ["www.scout.cloud", "domain.hello.world"]
+        dns_names = ["www.ballscout.cloud", "localhost"]
       }
 
       subject            = "CN=scout-signing-certificate"

@@ -1,5 +1,5 @@
 ﻿//
-//  DatabaseModelMap.cs
+//  IocRegistrations.cs
 //
 //  Author:
 //       bcline <bcline760@yahoo.com>
@@ -19,21 +19,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using Autofac;
+using Scout.Core.Security;
 
-using AutoMapper;
-using Scout.Core.Contract;
-namespace Scout.Model.DB.Mongo
+namespace Scout.Core
 {
-    public class DatabaseModelMap : Profile
+    public class IocRegistrations : IRegister
     {
-        public DatabaseModelMap()
+        public void Register(ContainerBuilder container)
         {
-            CreateMap<PlayerModel, Player>().ReverseMap().ForMember(m => m.PlayerSearchName,
-                (IMemberConfigurationExpression<Player, PlayerModel, object> obj) => obj.MapFrom(m => $"{m.FirstName} {m.LastName}"));
-
-            CreateMap<TeamModel, Team>().ReverseMap();
-            //CreateMap<ScoutingReportModel, ScoutingReport>().ReverseMap();
-            CreateMap<AccountModel, Account>().ReverseMap();
+            container.RegisterType<ScoutEncryption>().As<IScoutEncryption>();
         }
     }
 }

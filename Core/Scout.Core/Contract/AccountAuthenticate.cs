@@ -30,24 +30,28 @@ namespace Scout.Core.Contract
         /// Gets or sets the email address.
         /// </summary>
         /// <value>The email address.</value>
+        [DataMember]
         public string EmailAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the password.
         /// </summary>
         /// <value>The password.</value>
+        [DataMember]
         public string Password { get; set; }
 
         /// <summary>
         /// Get or set the single signon provider used by the user
         /// </summary>
         /// <value>The sso provider.</value>
+        [DataMember]
         public SingleSignOnProvider SsoProvider { get; set; }
 
         /// <summary>
         /// Get or set the token returned from the single signon provider
         /// </summary>
         /// <value>The sso token.</value>
+        [DataMember]
         public string SsoToken { get; set; }
     }
 }

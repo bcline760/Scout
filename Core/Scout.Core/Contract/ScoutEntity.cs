@@ -15,7 +15,7 @@ namespace Scout.Core.Contract
         /// </summary>
         /// <value>The identifier.</value>
         [DataMember]
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
         /// <summary>
         /// Get or set when the object was created in the data store
         /// </summary>

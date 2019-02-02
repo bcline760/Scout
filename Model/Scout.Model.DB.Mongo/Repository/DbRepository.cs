@@ -43,16 +43,19 @@ namespace Scout.Model.DB.Mongo.Repository
             return result.FirstOrDefault();
         }
 
-        protected async Task<int> SaveAsync(TModel model)
+        protected async Task<Guid> SaveAsync(TModel model)
         {
-            var filter = Builders<TModel>.Filter.Eq("id", model.ID);
+            if (Guid.Parse(model.Id) == Guid.Empty)
+                model.Id = Guid.NewGuid().ToString();
+
+            var filter = Builders<TModel>.Filter.Eq("id", model.Id);
             var result = await _collection.ReplaceOneAsync(
-                p => p.ID == model.ID,
+                filter,
                 model,
                 new UpdateOptions { IsUpsert = true }
             );
 
-            return (int)result.ModifiedCount;
+            return Guid.Parse(result.UpsertedId.AsString);
         }
 
         /// <summary>

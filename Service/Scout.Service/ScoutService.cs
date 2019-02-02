@@ -47,7 +47,7 @@ namespace Scout.Service
                 contract.IsActive = false;
 
                 var result = await _repo.SaveAsync(contract);
-                svcResult.RecordsModified = result;
+                // svcResult.RecordsModified = result;
             }
             catch (Exception)
             {
@@ -76,7 +76,7 @@ namespace Scout.Service
             try
             {
                 var result = await _repo.SaveAsync(contract);
-                svcResult.RecordsModified = result;
+                // svcResult.RecordsModified = result;
             }
             catch (Exception)
             {

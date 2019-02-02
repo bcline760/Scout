@@ -23,7 +23,7 @@ namespace Scout.Core.Contract
 {
     public enum ScoutAccountRole
     {
-        Basic,
-        Admin
+        Basic = 0,
+        Admin = 1
     }
 }
